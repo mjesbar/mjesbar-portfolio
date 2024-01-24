@@ -33,8 +33,8 @@ module.exports = {
         "2048": "2048px",
       },
       colors: {
-        "black": "#000000",
-        "white": "#ffffff",
+        "black": "#000",
+        "white": "#fff",
         "darktheme": {
           l1: "#11151E",
           l2: "#151923",
@@ -51,20 +51,65 @@ module.exports = {
           l3: "#2ED9C2"
         },
         "ocretheme": {
-          l1: "#DDDDC0",
-          l2: "#FDFDE0",
+          l1: "#BBBBA0",
+          l2: "#DCDCD0",
           l3: "#FFFFEE"
         }
       },
       fontFamily: {
-        sans: ['var(--font-inter)', 'var(--font-merriweather-sans)', 'var(--font-open-sans)', "sans-serif"],
-        serif: ['var(--font-merriweather)', 'var(--font-bitter)', 'var(--font-domine)', "serif"],
-        mono: ['var(--font-roboto-mono)', 'var(--font-ubuntu-mono)', 'var(--font-pt-mono)', "monospace"],
+        sans: [
+          'var(--font-inter)',
+          'var(--font-merriweather-sans)',
+          'var(--font-open-sans)',
+          "sans-serif"
+        ],
+        serif: [
+          'var(--font-merriweather)',
+          'var(--font-bitter)',
+          'var(--font-domine)',
+          "serif"
+        ],
+        mono: [
+          'var(--font-roboto-mono)',
+          'var(--font-ubuntu-mono)',
+          'var(--font-pt-mono)',
+          "monospace"
+        ],
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      },
+      keyframes: {
+        spin: {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" },
+        },
+        slidexr: {
+          "0%": {
+            transform: "translateX(-25%)",
+            opacity: "0",
+          },
+          "100%": {
+            transform: "translateX(0)",
+            opacity: "1",
+          },
+        },
+        slidexl: {
+          "0%": {
+            transform: "translateX(25%)",
+            opacity: "0",
+          },
+          "100%": {
+            transform: "translateX(0)",
+            opacity: "1",
+          },
+        },
+      },
+      animation: {
+        "slidexr": "slidexr 1s ease 1",
+        "slidexl": "slidexl 1s ease 1",
       },
     },
   },
