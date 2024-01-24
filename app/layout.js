@@ -21,6 +21,7 @@ export default function RootLayout({ children }
         ${robotoMono.variable}
         ${ubuntuMono.variable}
         ${ptMono.variable}
+        bg-darktheme-l1 w-full h-full overflow-hidden
         `}>
         {children}
       </body>
