@@ -82,10 +82,6 @@ module.exports = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       keyframes: {
-        spin: {
-          "0%": { transform: "rotate(0deg)" },
-          "100%": { transform: "rotate(360deg)" },
-        },
         slidexr: {
           "0%": {
             transform: "translateX(-25%)",
@@ -105,11 +101,20 @@ module.exports = {
             transform: "translateX(0)",
             opacity: "1",
           },
+          appear: {
+            "0%": {
+              opacity: "0",
+            },
+            "100%": {
+              opacity: "0.5",
+            },
+          },
         },
       },
       animation: {
         "slidexr": "slidexr 1s ease 1",
         "slidexl": "slidexl 1s ease 1",
+        "appear": "appear 5s ease 1",
       },
     },
   },
