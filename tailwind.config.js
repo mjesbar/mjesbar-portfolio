@@ -82,39 +82,48 @@ module.exports = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       keyframes: {
-        slidexr: {
-          "0%": {
-            transform: "translateX(-25%)",
-            opacity: "0",
-          },
-          "100%": {
-            transform: "translateX(0)",
-            opacity: "1",
-          },
+        slideright: {
+          "0%": { transform: "translateX(-25%)", opacity: "0" },
+          "100%": { transform: "translateX(0)", opacity: "1" },
         },
-        slidexl: {
-          "0%": {
-            transform: "translateX(25%)",
-            opacity: "0",
-          },
-          "100%": {
-            transform: "translateX(0)",
-            opacity: "1",
-          },
-          appear: {
-            "0%": {
-              opacity: "0",
-            },
-            "100%": {
-              opacity: "0.5",
-            },
-          },
+        slideleft: {
+          "0%": { transform: "translateX(25%)", opacity: "0" },
+          "100%": { transform: "translateX(0)", opacity: "1" },
         },
+        slideup: {
+          "0%": { transform: "translateY(25%)", opacity: "0" },
+          "100%": { transform: "translateY(0)", opacity: "1" },
+        },
+        slidedown: {
+          "0%": { transform: "translateY(-25%)", opacity: "0" },
+          "100%": { transform: "translateY(0)", opacity: "1" },
+        },
+        appear10: { "0%": { opacity: "0" }, "100%": { opacity: "0.1" } },
+        appear20: { "0%": { opacity: "0" }, "100%": { opacity: "0.2" } },
+        appear30: { "0%": { opacity: "0" }, "100%": { opacity: "0.3" } },
+        appear40: { "0%": { opacity: "0" }, "100%": { opacity: "0.4" } },
+        appear50: { "0%": { opacity: "0" }, "100%": { opacity: "0.5" } },
+        appear60: { "0%": { opacity: "0" }, "100%": { opacity: "0.6" } },
+        appear70: { "0%": { opacity: "0" }, "100%": { opacity: "0.7" } },
+        appear80: { "0%": { opacity: "0" }, "100%": { opacity: "0.8" } },
+        appear90: { "0%": { opacity: "0" }, "100%": { opacity: "0.9" } },
+        appear100: { "0%": { opacity: "0" }, "100%": { opacity: "1" } },
       },
       animation: {
-        "slidexr": "slidexr 1s ease 1",
-        "slidexl": "slidexl 1s ease 1",
-        "appear": "appear 5s ease 1",
+        "slider": "slideright 1s ease 1",
+        "slidel": "slideleft 1s ease 1",
+        "slideu": "slideup 1s ease 1",
+        "slided": "slidedown 1s ease 1",
+        "appear10": "appear10 1s ease 1",
+        "appear20": "appear20 1s ease 1",
+        "appear30": "appear30 1s ease 1",
+        "appear40": "appear40 1s ease 1",
+        "appear50": "appear50 1s ease 1",
+        "appear60": "appear60 1s ease 1",
+        "appear70": "appear70 1s ease 1",
+        "appear80": "appear80 1s ease 1",
+        "appear90": "appear90 1s ease 1",
+        "appear100": "appear100 1s ease 1",
       },
     },
   },

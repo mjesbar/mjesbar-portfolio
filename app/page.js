@@ -2,7 +2,7 @@
 // Background Component
 export function Background() {
   return (
-    <img className="w-full h-auto absolute -z-50 animate-appear opacity-5"
+    <img className="w-full h-auto absolute -z-50 animate-appear10 opacity-10"
       src="background.jpg" alt="background-image"/>
   )
 }
@@ -10,13 +10,15 @@ export function Background() {
 export function SpecialSign({ text1, text2 }) {
   return (
     <a className="flex w-80 h-1/2 justify-center gap-1 text-sm transition-all ease-out
-      duration-100 hover:scale-105 hover:text-orange-500 hover:text-9xl hover:h-full" href="/">
+      duration-100 hover:scale-105 hover:text-orange-500 hover:text-[120px] hover:h-4/6"
+      href="/">
       <span className="self-start font-serif text-ocretheme-l1 text-sm lg:text-xl
-        animate-slidexl">
+        animate-slidel">
         { text1 }
       </span>
       <bold className="self-center font-bold">·</bold>
-      <span className="self-end font-mono text-ocretheme-l3 text-sm lg:text-xl animate-slidexr">
+      <span className="self-end font-mono text-ocretheme-l3 text-sm lg:text-xl
+        animate-slider">
         { text2 }
       </span>
     </a>
@@ -25,9 +27,8 @@ export function SpecialSign({ text1, text2 }) {
 
 function SocialMediaIcon({link, image, description}) {
   return (
-    <a className="flex w-10 lg:w-12 h-auto transition-all ease-out duration-200 hover:scale-125
-      animate-slidexl"
-      target="_blank" href={link}>
+    <a className="flex w-10 lg:w-12 h-auto transition-all ease-out duration-200
+      hover:scale-125 animate-slidel" target="_blank" href={link}>
       <img src={image} alt={description}/>
     </a>
   )
@@ -35,12 +36,12 @@ function SocialMediaIcon({link, image, description}) {
 
 function RedirectCard({text}) {
   return (
-    <a className="capitalize font-serif text-ocretheme-l1 text-7xl text-center lxl:text-9xl
-      lxl:text-left after:content-[''] after:block after:rounded-md after:bg-ocretheme-l3
-      after:opacity-0 after:h-2 after:w-0 after:transition-all after:ease-in after:duration-200
-      hover:after:opacity-100 hover:after:w-full transition-all ease-in duration-200
-      hover:text-ocretheme-l3 hover:translate-x-5 hover:scale-105 animate-slidexr"
-      href={`/${text}`}>
+    <a className="capitalize font-serif text-ocretheme-l1 text-7xl text-center
+      lxl:text-9xl lxl:text-left after:content-[''] after:block after:rounded-md
+      after:bg-ocretheme-l3 after:opacity-0 after:h-2 after:w-0 after:transition-all
+      after:ease-in after:duration-200a hover:after:opacity-100 hover:after:w-full
+      transition-all ease-in duration-200 hover:text-ocretheme-l3 hover:translate-x-5
+      hover:scale-105 animate-slider" href={`/${text}`}>
       {text}
     </a>
   )
@@ -56,7 +57,8 @@ export default function Home() {
         <SpecialSign text1="Miguel Bello" text2="mjesbar"/>
         <div id="header-separator" className="shrink lg:w-80 sm:w-0 h-full"></div>
         <div className="flex w-80 h-auto justify-evenly items-center gap-2">
-          <SocialMediaIcon link="https://www.instagram.com/mjesbar/" image="instagram.svg"
+          <SocialMediaIcon link="https://www.instagram.com/mjesbar/"
+            image="instagram.svg"
             alt="instagram-link" />
           <SocialMediaIcon link="https://www.linkedin.com/in/mdjba/" image="linkedin.svg"
             alt="linkedin-link" />
@@ -67,12 +69,14 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="flex flex-row w-full h-[65%] transition-all ease-out duration-300 lxl:h-[75%]
-        justify-center items-start">
-        <img className="collapse w-1/2 h-auto lxl:max-w-768 lxl:h-auto lxl:visible animate-slidexl"
-          src="profile-photo.png" alt="profile-image"/>
-        <div className="flex flex-col w-1/2 h-auto gap-5 mt-32 items-center lxl:items-start
-          lxl:w-512">
+      <main className="flex flex-row w-full h-[65%] transition-all ease-out duration-300
+        lxl:h-[75%] justify-center items-start">
+        <img className="animate-appear100 transition-transform ease-in duration-200
+          xl:-translate-y-28 2xl:-translate-y-64 collapse relative  w-1/2 h-auto
+          lxl:max-w-896 lxl:h-auto lxl:visible -z-40" src="profile-photo.png"
+          alt="profile-image"/>
+        <div className="flex flex-col w-1/2 h-auto gap-5 mt-32 items-center
+          lxl:items-start lxl:w-512">
           <RedirectCard text="work"/>
           <RedirectCard text="about"/>
           <RedirectCard text="contact"/>
@@ -80,9 +84,9 @@ export default function Home() {
       </main>
 
       <footer>
-        <span className="inline-block w-full h-auto transition-all ease-out duration-300
-          lxl:ml-[20%] text-center align-middle text-slate-800">
-          2024 Miguel Bello · Full Stack Developer · Colombia
+        <span className="font-serif inline-block w-full h-auto transition-all ease-out
+          duration-300 lxl:ml-[20%] text-center align-middle text-slate-800">
+          2023 · Miguel Bello · FullStack Developer/Industrial Engineer · Colombia
         </span>
       </footer>  
     </>
