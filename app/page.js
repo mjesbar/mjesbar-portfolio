@@ -27,8 +27,8 @@ export function SpecialSign({ text1, text2 }) {
 
 function SocialMediaIcon({link, image, description}) {
   return (
-    <a className="flex w-10 lg:w-12 h-auto transition-all ease-out duration-200
-      hover:scale-125 animate-slidel" target="_blank" href={link}>
+    <a className="flex w-10 lxl:w-14 h-auto transition-all ease-out duration-100
+      hover:scale-80 animate-slidel" target="_blank" href={link}>
       <img src={image} alt={description}/>
     </a>
   )
@@ -39,8 +39,8 @@ function RedirectCard({text}) {
     <a className="capitalize font-serif text-ocretheme-l1 text-7xl text-center
       lxl:text-9xl lxl:text-left after:content-[''] after:block after:rounded-md
       after:bg-ocretheme-l3 after:opacity-0 after:h-2 after:w-0 after:transition-all
-      after:ease-in after:duration-200a hover:after:opacity-100 hover:after:w-full
-      transition-all ease-in duration-200 hover:text-ocretheme-l3 hover:translate-x-5
+      after:ease-in after:duration-200 hover:after:opacity-100 hover:after:w-full
+      transition-all ease-in duration-100 hover:text-ocretheme-l3 hover:translate-x-5
       hover:scale-105 animate-slider" href={`/${text}`}>
       {text}
     </a>
@@ -52,8 +52,8 @@ export default function Home() {
     <>
 
       <Background/>
-
-      <header className="flex w-full h-32 justify-evenly items-center">
+      <div id="limited-container" className="w-full h-[995px] overflow-hidden">
+      <header className="flex w-full h-1/6 justify-evenly items-center">
         <SpecialSign text1="Miguel Bello" text2="mjesbar"/>
         <div id="header-separator" className="shrink lg:w-80 sm:w-0 h-full"></div>
         <div className="flex w-80 h-auto justify-evenly items-center gap-2">
@@ -69,7 +69,7 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="flex flex-row w-full h-[65%] transition-all ease-out duration-300
+      <main className="flex flex-row w-full h-4/6 transition-all ease-out duration-300
         lxl:h-[75%] justify-center items-start">
         <img className="animate-appear100 transition-transform ease-in duration-200
           xl:-translate-y-28 2xl:-translate-y-64 collapse relative  w-1/2 h-auto
@@ -83,12 +83,13 @@ export default function Home() {
         </div>
       </main>
 
-      <footer>
-        <span className="font-serif inline-block w-full h-auto transition-all ease-out
-          duration-300 lxl:ml-[20%] text-center align-middle text-slate-800">
+      <footer className="flex w-full h-1/6 justify-center items-start">
+        <div className="w-1/2 collapse lxl:visible"></div>
+        <span className="w-1/2 font-serif text-slate-800 text-center">
           2023 · Miguel Bello · FullStack Developer/Industrial Engineer · Colombia
         </span>
-      </footer>  
+      </footer>
+      </div>
     </>
   )
 }

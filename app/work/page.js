@@ -27,6 +27,19 @@ function WorkCard({title, position, description, image, link}) {
   )
 }
 
+function SkillCard({skill, description}) {
+  return (
+    <article id='skill-card' className='flex flex-row w-full h-96'>
+      <div id="skill-content" className='flex flex-col'>
+
+      </div>
+      <img id='skill-img-reference'>
+
+      </img>
+    </article>
+  )
+}
+
 export default function Work() {
   return (
     <>
@@ -38,6 +51,7 @@ export default function Work() {
       
       <main className="grid grid-cols-1 w-2/3 h-full mx-auto place-content-start
         place-items-center animate-appear100 gap-5">
+
         <h1 className="p-10 font-serif text-ocretheme-l1 text-4xl text-center
           lxl:text-6xl">
           Recent Works
@@ -47,6 +61,18 @@ export default function Work() {
           all these wrapped by the Woocommerce, Wordpress & Daminion RestAPI. Also has a 
           syncyng service as background service, easing to update of resources in the
           webpage." image="ericksonstock-collage.png" link="https://ericksonstock.com/"/>
+        <WorkCard title="Mjesbar Portfolio" position="Frontend Developer"
+          description="Since I originally was just Backend speciallized, this becomes my
+          first Frontend oriented experience." image="profile-thumbnail.png"
+          link="https://google.com"/>
+        <WorkCard title="Mjesbar Portfolio" position="Frontend Developer"
+          description="Since I originally was just Backend speciallized, this becomes my
+          first Frontend oriented experience." image="profile-thumbnail.png"
+          link="https://google.com"/>
+        <WorkCard title="Mjesbar Portfolio" position="Frontend Developer"
+          description="Since I originally was just Backend speciallized, this becomes my
+          first Frontend oriented experience." image="profile-thumbnail.png"
+          link="https://google.com"/>
         <WorkCard title="Mjesbar Portfolio" position="Frontend Developer"
           description="Since I originally was just Backend speciallized, this becomes my
           first Frontend oriented experience." image="profile-thumbnail.png"
