@@ -13,6 +13,7 @@ module.exports = {
         "llg": "960px",
         "lxl": "1160px",
         "l2xl": "1367px",
+        "3xl": "1600px",
       },
       spacing: {
         "128": "128px",
