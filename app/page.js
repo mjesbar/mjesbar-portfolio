@@ -89,7 +89,7 @@ export default function Home() {
       </main>
 
       <footer className="flex w-full h-1/6 justify-between items-start">
-        <div className="w-1/2 h-full collapse lxl:visible"></div>
+        <div className="w-0 lxl:w-1/2 h-full collapse lxl:visible"></div>
         <span className="w-full lxl:w-1/2 h-full font-serif text-slate-800 text-center
           lxl:text-left text-md lxl:text-lg 4xl:text-2xl">
           2023 · Miguel Bello · FullStack Developer/Industrial Engineer · Colombia

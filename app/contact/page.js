@@ -15,17 +15,17 @@ export default function Contact() {
 
       <main className="grid grid-cols-1 mx-10 sm:mx-52 place-content-start
         place-items-center animate-appear100">
-        <h1 className="my-10 sm:my-14 text-5xl sm:text-8xl font-serif font-bold
-          text-center text-ocretheme-l1">
+        <h1 className="my-10 sm:my-14 text-5xl sm:text-8xl font-serif text-center
+          text-ocretheme-l1">
           Contact me
         </h1>
-        <p className="my-10 text-2xl font-sans font-bold text-center text-ocretheme-l1">
+        <p className="my-10 text-2xl font-sans text-center text-ocretheme-l1">
           If you want to contact me, you can do it through my social networks
           or by sending me an email to <span className="text-orange-400">
             miguedjba96@gmail.com</span>
         </p>
-        <div className="flex w-96 my-10 sm:my-20 scale-150 h-auto
-          justify-center items-center gap-5">
+        <div className="flex w-96 my-10 sm:my-20 scale-150 h-auto justify-center
+          items-center gap-5">
           <SocialMediaIcon link="https://www.instagram.com/mjesbar/"
             image="instagram.svg"
             alt="instagram-link" />
