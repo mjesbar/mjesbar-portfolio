@@ -14,6 +14,9 @@ module.exports = {
         "lxl": "1160px",
         "l2xl": "1367px",
         "3xl": "1600px",
+        "4xl": "2000px",
+        "5xl": "2400px",
+        "6xl": "2800px",
       },
       spacing: {
         "128": "128px",
@@ -84,19 +87,19 @@ module.exports = {
       },
       keyframes: {
         slideright: {
-          "0%": { transform: "translateX(-25%)", opacity: "0" },
+          "0%": { transform: "translateX(-30%)", opacity: "0" },
           "100%": { transform: "translateX(0)", opacity: "1" },
         },
         slideleft: {
-          "0%": { transform: "translateX(25%)", opacity: "0" },
+          "0%": { transform: "translateX(30%)", opacity: "0" },
           "100%": { transform: "translateX(0)", opacity: "1" },
         },
         slideup: {
-          "0%": { transform: "translateY(25%)", opacity: "0" },
+          "0%": { transform: "translateY(30%)", opacity: "0" },
           "100%": { transform: "translateY(0)", opacity: "1" },
         },
         slidedown: {
-          "0%": { transform: "translateY(-25%)", opacity: "0" },
+          "0%": { transform: "translateY(-30%)", opacity: "0" },
           "100%": { transform: "translateY(0)", opacity: "1" },
         },
         appear10: { "0%": { opacity: "0" }, "100%": { opacity: "0.1" } },
