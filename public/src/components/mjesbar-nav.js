@@ -3,59 +3,52 @@ import { Colour } from '/src/palette.js';
 
 
 class MjesbarNav extends HTMLElement {
+
   constructor() {
     super();
+    this.setAttribute('showing', true);
+  }
 
-    const tagStyle = {
-      display: 'flex',
-      flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
-      transition: 'transform 0.25s',
-      position: 'fixed', zIndex: 10, top: 0, left: 0,
-      width: '100%', height: '10vh',
-      backgroundColor: Colour.black, color: Colour.white,
-      overflow: 'visible',
-    };
-    Object.assign(this.style, tagStyle);
+  #hideMjesbarNavBar() {
+    this.setAttribute('showing', false);
+    this.style.transform = 'translateY(-10vh)';
+  }
 
-    // Make visible this element when pointer is near
-    document.onmousemove = (event) => {
-      const navBar = document.querySelector('mjesbar-nav');
-      const navRect = navBar.getBoundingClientRect();
-      const tolerance = 50; // Adjust this value to change the proximity threshold
-      let isShowing = false;
-
-      const isNearNavBar = (
-        event.clientY >= navRect.top - tolerance
-        && event.clientY <= navRect.bottom + tolerance
-      );
-      if (isNearNavBar && !isShowing) {
-        this.style.transform = 'translateY(0vh)';
-        isShowing = true;
-      }
-    };
-
-    // hide the element when user scroll down, and appear when scroll up.
-    // no matter the current scroll position.
-    document.onscroll = () => {
-      let scrollPos = window.scrollY || document.documentElement.scrollTop;
-      if (scrollPos > this.lastScrollPos) {
-        this.style.transform = 'translateY(-10vh)';
-      }
-      else {
-        this.style.transform = 'translateY(0vh)';
-      }
-      this.lastScrollPos = scrollPos;
-    }
+  #showMjesbarNavBar() {
+    this.setAttribute('showing', true);
+    this.style.transform = 'translateY(0vh)';
   }
 
   connectedCallback() {
+
     // Dynamic logo, omnipresent link to home
+    // mjesbar-nav
+    // |- logoContainer
+    //   |- logoLeftText
+    //   |- logoCenterIcon
+    //     |- logoCenterMisc1
+    //     |- logoCenterMisc2
+    //     |- ...
+    //     |- logoCenterMiscN
+    //  |- logoRightText
+
     const logoContainer = document.createElement('div');
     const logoLeftText = document.createElement('span');
     const logoCenterIcon = document.createElement('div');
     const logoRightText = document.createElement('span');
 
-    // Styles
+    // Styles ==================================================================
+
+    const mjesbarNavStyle = {
+      display: 'flex',
+      flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
+      position: 'fixed', zIndex: 10, top: 0, left: 0,
+      width: '100%', height: '10vh',
+      backgroundColor: Colour.black, color: Colour.white,
+      overflow: 'visible',
+      transition: 'transform 0.25s',
+    };
+    Object.assign(this.style, mjesbarNavStyle);
 
     const logoContainerStyle = {
       display: 'flex',
@@ -74,17 +67,19 @@ class MjesbarNav extends HTMLElement {
       margin: 0, padding: 0, border: 0,
       backgroundColor: Colour.transparent, color: Colour.white,
       fontSize: '16px', fontWeight: 'bold',
-      transition: 'transform 0.25s',
+      transition: 'transform 0.5s',
     };
     Object.assign(logoLeftText.style, logoLeftTextStyle);
 
     const logoCenterIconStyle = {
       position: 'relative',
+      display: 'flex',
+      alignItems: 'center', justifyContent: 'center',
       width: 'auto', height: '10%', aspectRatio: '1 / 1',
       margin: 0, padding: 0, border: 0,
       borderRadius: '50%',
       backgroundColor: Colour.persimmon,
-      transition: 'transform 0.25s',
+      transition: 'transform 2s, height 0.25s',
     };
     Object.assign(logoCenterIcon.style, logoCenterIconStyle);
 
@@ -95,43 +90,30 @@ class MjesbarNav extends HTMLElement {
       margin: 0, padding: 0, border: 0,
       backgroundColor: Colour.transparent, color: Colour.white,
       fontSize: '16px', fontWeight: 'bold',
-      transition: 'transform 0.25s',
+      transition: 'transform 0.5s',
     };
     Object.assign(logoRightText.style, logoRightTextStyle);
 
-    // Content
+    // Content element =========================================================
+
     logoLeftText.textContent = 'Mjesbar';
     logoRightText.textContent = 'Dev';
 
-    // Append DOM Tree
+    // Append Elements to DOM Tree =============================================
 
     logoContainer.appendChild(logoLeftText);
     logoContainer.appendChild(logoCenterIcon);
 
-    const numberOfRings = 4;
+    const numberOfRings = 5;
     for (let i = 0; i < numberOfRings; i++) {
       const logoCenterMisc = document.createElement('div');
-      // Randomize traits
-      const orderColour = [
-        Colour.sage,
-        Colour.sageLow,
-        Colour.iceBlueLow,
-        Colour.persimmonLow,
-      ]
       // Set style
       const logoCenterMiscStyle = {
         position: 'absolute',
         left: '50%', top: '50%',
-        width: 'auto', height: '100%', aspectRatio: '1 / 1',
-        margin: 0, padding: 0,
-        borderRadius: '100%',
-        border: '15px solid ' + Colour.transparent,
-        borderRightColor: orderColour[i],
-        borderLeftColor: orderColour[i],
-        backgroundColor: Colour.transparent,
+        margin: 0, padding: 0, border: 0,
         transform: 'translate(-50%, -50%) rotate(0deg)',
-        opacity: 0.0,
-        transition: 'transform 1s, opacity 0.5s',
+        transition: 'transform 1s, opacity 0.25s',
       };
       Object.assign(logoCenterMisc.style, logoCenterMiscStyle);
       logoCenterIcon.appendChild(logoCenterMisc);
@@ -140,10 +122,39 @@ class MjesbarNav extends HTMLElement {
     logoContainer.appendChild(logoRightText);
     this.appendChild(logoContainer);
 
-    // Event Handlers
+    // Event Handlers and Animations ===========================================
+
+    document.onmousemove = (event) => {
+      // Make visible this element when pointer is near
+      const navRect = this.getBoundingClientRect();
+      const tolerance = 50;
+
+      const isNearNavBar = (
+        event.clientY >= navRect.top - tolerance
+        && event.clientY <= navRect.bottom + tolerance
+      );
+      if (isNearNavBar && !!this.getAttribute('showing')) {
+        this.#showMjesbarNavBar();
+      }
+    };
+
+    document.onscroll = () => {
+      // hide the element when user scroll down, and appear when scroll up.
+      // no matter the current scroll position.
+      let scrollPos = window.scrollY || document.documentElement.scrollTop;
+      if (scrollPos > this.lastScrollPos) {
+        this.#hideMjesbarNavBar();
+      }
+      if (scrollPos < this.lastScrollPos) {
+        this.#showMjesbarNavBar();
+      }
+      this.lastScrollPos = scrollPos;
+    }
+
 
     logoContainer.onmouseenter = () => {
-      logoContainer.style.transform = 'scale(1.5) translateY(2.5vh)';
+      // Animate logo
+      logoContainer.style.transform = 'scale(1.5) translateY(25%)';
       logoCenterIcon.style.height = '50%';
       logoLeftText.style.transform = 'translateY(-25%)';
       logoRightText.style.transform = 'translateY(25%)';
@@ -156,6 +167,7 @@ class MjesbarNav extends HTMLElement {
         const randomColour = [
           Colour.sage,
           Colour.sageLow,
+          Colour.iceBlue,
           Colour.iceBlueLow,
           Colour.persimmonLow,
         ]
@@ -178,6 +190,7 @@ class MjesbarNav extends HTMLElement {
     }
 
     logoContainer.onmouseleave = () => {
+      // Reset logo
       logoContainer.style.transform = 'scale(1) translateY(0)';
       logoCenterIcon.style.height = '10%';
       logoLeftText.style.transform = 'translateY(25%)';
@@ -192,10 +205,11 @@ class MjesbarNav extends HTMLElement {
     }
 
     logoContainer.onclick = () => {
+      // Redirect to home
       window.location.href = '/';
     }
   }
 }
 
 
-customElements.define('mjesbar-nav', MjesbarNav, { extends: 'div' });
+customElements.define('mjesbar-nav', MjesbarNav);
