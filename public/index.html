@@ -7,22 +7,26 @@
     <script defer type="module" src="/src/palette.js"></script>
     <script defer type="module" src="/src/core.js"></script>
     <script defer type="module" src="/src/components/component.js"></script>
-    <script defer type="module" src="/src/components/mjesbar-nav.js"></script>
+    <script defer type="module" src="/src/components/mj-nav.js"></script>
+    <script defer type="module" src="/src/components/mj-section.js"></script>
   </head>
 
   <body>
     <header>
-      <mjesbar-nav></mjesbar-nav>
+      <mj-nav></mj-nav>
     </header>
-    <main>
-      <section>
-      </section>
-      <section>
-      </section>
-      <section>
-      </section>
-      <section>
-      </section>
+    <main style="display: flex; flex-direction: column; justify-content: start;
+    align-items: center; width: 100%; height: auto;">
+      <mj-section-textalone
+        main-text="Welcome"
+        sub-text="My Friend"
+        mini-text="Enjoy the page!">
+      </mj-section-textalone>
+      <mj-section-textalone
+        main-text="My Name is Miguel Bello"
+        sub-text="I'm an Industrial & Software Engineer"
+        mini-text="and even more...">
+      </mj-section-textalone>
     </main>
   </body>
 

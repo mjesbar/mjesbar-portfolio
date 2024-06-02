@@ -2,27 +2,28 @@
 import { Colour } from '/src/palette.js';
 
 
-class MjesbarNav extends HTMLElement {
+
+class MjNav extends HTMLElement {
+
+  static observedAttributes = ['showing'];
 
   constructor() {
     super();
     this.setAttribute('showing', true);
   }
 
-  #hideMjesbarNavBar() {
-    this.setAttribute('showing', false);
+  hideMjNavBar() {
     this.style.transform = 'translateY(-10vh)';
   }
 
-  #showMjesbarNavBar() {
-    this.setAttribute('showing', true);
+  showMjNavBar() {
     this.style.transform = 'translateY(0vh)';
   }
 
   connectedCallback() {
 
     // Dynamic logo, omnipresent link to home
-    // mjesbar-nav
+    // mj-nav
     // |- logoContainer
     //   |- logoLeftText
     //   |- logoCenterIcon
@@ -32,14 +33,21 @@ class MjesbarNav extends HTMLElement {
     //     |- logoCenterMiscN
     //  |- logoRightText
 
+    // Attributes ==============================================================
+
+    // Children ================================================================
+
     const logoContainer = document.createElement('div');
     const logoLeftText = document.createElement('span');
     const logoCenterIcon = document.createElement('div');
     const logoRightText = document.createElement('span');
 
+    logoLeftText.textContent = 'Mjesbar';
+    logoRightText.textContent = 'Dev';
+
     // Styles ==================================================================
 
-    const mjesbarNavStyle = {
+    const mjNavStyle = {
       display: 'flex',
       flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
       position: 'fixed', zIndex: 10, top: 0, left: 0,
@@ -48,7 +56,7 @@ class MjesbarNav extends HTMLElement {
       overflow: 'visible',
       transition: 'transform 0.25s',
     };
-    Object.assign(this.style, mjesbarNavStyle);
+    Object.assign(this.style, mjNavStyle);
 
     const logoContainerStyle = {
       display: 'flex',
@@ -94,12 +102,7 @@ class MjesbarNav extends HTMLElement {
     };
     Object.assign(logoRightText.style, logoRightTextStyle);
 
-    // Content element =========================================================
-
-    logoLeftText.textContent = 'Mjesbar';
-    logoRightText.textContent = 'Dev';
-
-    // Append Elements to DOM Tree =============================================
+    // Append ==================================================================
 
     logoContainer.appendChild(logoLeftText);
     logoContainer.appendChild(logoCenterIcon);
@@ -122,35 +125,7 @@ class MjesbarNav extends HTMLElement {
     logoContainer.appendChild(logoRightText);
     this.appendChild(logoContainer);
 
-    // Event Handlers and Animations ===========================================
-
-    document.onmousemove = (event) => {
-      // Make visible this element when pointer is near
-      const navRect = this.getBoundingClientRect();
-      const tolerance = 50;
-
-      const isNearNavBar = (
-        event.clientY >= navRect.top - tolerance
-        && event.clientY <= navRect.bottom + tolerance
-      );
-      if (isNearNavBar && !!this.getAttribute('showing')) {
-        this.#showMjesbarNavBar();
-      }
-    };
-
-    document.onscroll = () => {
-      // hide the element when user scroll down, and appear when scroll up.
-      // no matter the current scroll position.
-      let scrollPos = window.scrollY || document.documentElement.scrollTop;
-      if (scrollPos > this.lastScrollPos) {
-        this.#hideMjesbarNavBar();
-      }
-      if (scrollPos < this.lastScrollPos) {
-        this.#showMjesbarNavBar();
-      }
-      this.lastScrollPos = scrollPos;
-    }
-
+    // Events ==================================================================
 
     logoContainer.onmouseenter = () => {
       // Animate logo
@@ -209,7 +184,19 @@ class MjesbarNav extends HTMLElement {
       window.location.href = '/';
     }
   }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (name === 'showing') {
+      if (newValue === oldValue) return;
+      (newValue === 'false' && oldValue === 'true') 
+        ? this.hideMjNavBar()
+        : null;
+      (newValue === 'true' && oldValue === 'false')
+        ? this.showMjNavBar()
+        : null;
+    }
+  }
 }
 
 
-customElements.define('mjesbar-nav', MjesbarNav);
+customElements.define('mj-nav', MjNav);

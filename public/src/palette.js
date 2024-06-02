@@ -14,4 +14,12 @@ export class Colour {
   static get iceBlue()        { return '#9FFCED'; }
   static get iceBlueLow()     { return '#7FDCED'; }
   static get transparent()    { return 'transparent'; }
+
+  // grayscale colours
+  // 5 range from #BBBBBB to #505050
+  static get gray100()        { return '#BBBBBB'; }
+  static get gray80()         { return '#A0A0A0'; }
+  static get gray60()         { return '#858585'; }
+  static get gray40()         { return '#6A6A6A'; }
+  static get gray20()         { return '#505050'; }
 }
