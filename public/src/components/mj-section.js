@@ -76,23 +76,23 @@ class MjSectionTextalone extends MjSection {
       position: 'relative',
       fontSize: '3em',
       transform: 'translateY(-100px)',
-      color: Colour.white, filter: 'blur(5px)', opacity: 0,
-      transition: 'transform 2s, opacity 2s, filter 2s',
+      color: Colour.white, filter: 'blur(3px)', opacity: 0,
+      transition: 'transform 1s, opacity 1s, filter 1s',
     };
     Object.assign(this.mainTextEl.style, mainTextStyle);
 
     const subTextStyle = {
       position: 'relative', left: '60px',
       transform: 'translateX(200px)',
-      color: Colour.gray80, filter: 'blur(5px)', opacity: 0,
-      transition: 'transform 2s, opacity 2s, filter 2s',
+      color: Colour.gray80, filter: 'blur(3px)', opacity: 0,
+      transition: 'transform 1.5s, opacity 1.5s, filter 1.5s',
     };
     Object.assign(this.subTextEl.style, subTextStyle);
 
     const miniTextStyle = {
       position: 'relative', right: '50px',
       transform: 'translateX(-200px)',
-      color: Colour.gray60, filter: 'blur(5px)', opacity: 0,
+      color: Colour.gray60, filter: 'blur(3px)', opacity: 0,
       transition: 'transform 2s, opacity 2s, filter 2s',
     };
     Object.assign(this.miniTextEl.style, miniTextStyle);
@@ -156,13 +156,13 @@ class MjSectionTextalone extends MjSection {
       }
       else if (newValue === 'false' && oldValue === 'true') {
         mainTextElement.style.opacity = 0;
-        mainTextElement.style.filter = 'blur(5px)';
+        mainTextElement.style.filter = 'blur(3px)';
         mainTextElement.style.transform = 'translateY(-100px)';
         subTextElement.style.opacity = 0;
-        subTextElement.style.filter = 'blur(5px)';
+        subTextElement.style.filter = 'blur(3px)';
         subTextElement.style.transform = 'translateX(200px)';
         miniTextElement.style.opacity = 0;
-        miniTextElement.style.filter = 'blur(5px)';
+        miniTextElement.style.filter = 'blur(3px)';
         miniTextElement.style.transform = 'translateX(-200px)';
       }
     }
@@ -174,11 +174,9 @@ class MjSectionDual extends MjSection {
 
   constructor() {
     super();
-    this.containerRight = document.createElement('div');
-    this.containerLeft = document.createElement('div');
+    this.linesContainer = document.createElement('div');
     this.ImgEl = document.createElement('img');
-    this.headingEl = document.createElement('h1');
-    this.paragraphEl = document.createElement('p');
+    this.wordEl = document.createElement('h1');
   }
 
   connectedCallback() {
@@ -189,29 +187,86 @@ class MjSectionDual extends MjSection {
 
     // Attributes ==============================================================
 
-    const imgSrc = this.getAttribute('image-src');
-    const imgPos = this.getAttribute('image-position');
+    const imgSrc = this.getAttribute('img-src');
+    const imgPos = this.getAttribute('img-pos');
+    const lines = this.getAttribute('lines').split(',');
 
     // Children ================================================================
 
-    
+    this.ImgEl.src = imgSrc;
+    this.wordEl.textContent = lines[0];
 
     // Styles ==================================================================
 
+    const MjSectionOverwriteStyle = {
+      display: 'flex',
+      flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
+      width: '100%', height: '100vh',
+      position: 'relative',
+    };
+    Object.assign(this.style, MjSectionOverwriteStyle);
+
+    const linesContainerStyle = {
+      display: 'flex',
+      flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+      width: '100%', height: '100%',
+      margin: 0, padding: 0, border: 0,
+      overflow: 'hidden',
+    };
+    Object.assign(this.linesContainer.style, linesContainerStyle);
+
+    const ImgStyle = {
+      width: '50%', height: 'auto',
+      margin: 0, padding: 0, border: 0,
+      zIndex: '1',
+      position: 'absolute', top: 0, // left: 0, assigned below depend on attribute
+    };
+    Object.assign(this.ImgEl.style, ImgStyle);
+
+    const notEligibleStyle = {
+      fontSize: '14em',
+      margin: 0, padding: 0, border: 0,
+      color: Colour.gray80,
+    };
+
+    const eligibleStyle = {
+      fontSize: '16em', fontWeight: 'bold',
+      margin: 0, padding: 0, border: 0,
+    };
+
     // Append ==================================================================
 
-    this.appendChild(this.containerLeft);
-    this.appendChild(this.containerRight);
+    this.appendChild(this.linesContainer);
+
+    for (const line of lines) {
+      const elegibleWords = ['work', 'service', 'about', 'contact'];
+      const words = line.split(' ');
+      const lineEl = document.createElement('div');
+      for (const word of words) {
+        const wordEl = document.createElement('span');
+        wordEl.textContent = word;
+        if (elegibleWords.includes(word.toLowerCase())) {
+          Object.assign(wordEl.style, eligibleStyle);
+        }
+        else {
+          Object.assign(wordEl.style, notEligibleStyle);
+        }
+        lineEl.appendChild(wordEl);
+      }
+      this.linesContainer.appendChild(lineEl);
+    }
+
     if (imgPos === 'left') {
-      this.containerLeft.appendChild(this.ImgEl);
-      this.containerRight.appendChild(this.headingEl);
-      this.containerRight.appendChild(this.paragraphEl);
+      this.ImgEl.style.left = 0;
+    }
+    else if (imgPos === 'right') {
+      this.ImgEl.style.right = 0;
     }
     else {
-      this.containerRight.appendChild(this.ImgEl);
-      this.containerLeft.appendChild(this.headingEl);
-      this.containerLeft.appendChild(this.paragraphEl);
+      this.ImgEl.style.left = 50;
     }
+
+    this.appendChild(this.ImgEl);
 
     // Events ==================================================================
 
@@ -224,3 +279,4 @@ class MjSectionDual extends MjSection {
 
 customElements.define('mj-section', MjSection);
 customElements.define('mj-section-textalone', MjSectionTextalone);
+customElements.define('mj-section-dual', MjSectionDual);
