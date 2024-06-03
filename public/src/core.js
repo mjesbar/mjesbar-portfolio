@@ -46,7 +46,7 @@ window.onload = () => {
   console.log('Window loaded');
 }
 
-document.onmousemove = (event) => {
+window.onmousemove = (event) => {
   // Make visible 'mj-nav' element when pointer is near
   const mjNav = document.querySelector('mj-nav');
   const navRect = mjNav.getBoundingClientRect();
@@ -62,7 +62,7 @@ document.onmousemove = (event) => {
   }
 };
 
-document.onscroll = () => {
+window.onscroll = () => {
   // hide the 'mj-nav' element when user scroll down, and appear when scroll up.
   // no matter the current scroll position.
   const mjNav = document.querySelector('mj-nav');
@@ -79,19 +79,3 @@ document.onscroll = () => {
   }
   mjNav.lastScrollPos = scrollPos;
 }
-
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.setAttribute('showing', 'true');
-    }
-    else {
-      entry.target.setAttribute('showing', 'false');
-    }
-  });
-});
-
-const mjSectionTextalones = document.querySelectorAll('mj-section-textalone');
-mjSectionTextalones.forEach((section) => observer.observe(section));
-
-

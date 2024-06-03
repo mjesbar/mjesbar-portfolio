@@ -5,6 +5,7 @@ import { Colour } from '/src/palette.js';
 
 class MjSection extends HTMLElement {
 
+
   static observedAttributes = ['showing'];
 
   constructor() {
@@ -35,14 +36,17 @@ class MjSectionTextalone extends MjSection {
 
   constructor() {
     super();
+    this.mainTextEl = document.createElement('h1');
+    this.subTextEl = document.createElement('h2');
+    this.miniTextEl = document.createElement('p');
+    this.blurredBgEl = document.createElement('img');
+    this.mirrorEl = document.createElement('div');
   }
 
   connectedCallback() {
     // mj-section-welcome
     // Inherited from mj-section
     super.connectedCallback();
-    this.style.height = '30vh';
-    this.style.margin = '35vh';
     this.setAttribute('showing', 'false');
 
     // Attributes ==============================================================
@@ -50,31 +54,32 @@ class MjSectionTextalone extends MjSection {
     const mainText = this.getAttribute('main-text');
     const subText = this.getAttribute('sub-text');
     const miniText = this.getAttribute('mini-text');
+    const bgImgSrc = this.getAttribute('background-image');
 
     // Children ================================================================
 
-    const mainTextElement = document.createElement('h1');
-    mainTextElement.textContent = mainText;
-    const subTextElement = document.createElement('h2');
-    subTextElement.textContent = subText;
-    const miniTextElement = document.createElement('p');
-    miniTextElement.textContent = miniText;
+    this.mainTextEl.textContent = mainText;
+    this.subTextEl.textContent = subText;
+    this.miniTextEl.textContent = miniText;
+    this.blurredBgEl.src = bgImgSrc;
 
     // Styles ==================================================================
 
-    const MjSectionTextaloneStyle = {
+    const MjSectionOverwriteStyle = {
       display: 'flex',
       flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+      position: 'relative',
     };
-    Object.assign(this.style, MjSectionTextaloneStyle);
+    Object.assign(this.style, MjSectionOverwriteStyle);
 
     const mainTextStyle = {
+      position: 'relative',
       fontSize: '3em',
       transform: 'translateY(-100px)',
       color: Colour.white, filter: 'blur(5px)', opacity: 0,
       transition: 'transform 2s, opacity 2s, filter 2s',
     };
-    Object.assign(mainTextElement.style, mainTextStyle);
+    Object.assign(this.mainTextEl.style, mainTextStyle);
 
     const subTextStyle = {
       position: 'relative', left: '60px',
@@ -82,7 +87,7 @@ class MjSectionTextalone extends MjSection {
       color: Colour.gray80, filter: 'blur(5px)', opacity: 0,
       transition: 'transform 2s, opacity 2s, filter 2s',
     };
-    Object.assign(subTextElement.style, subTextStyle);
+    Object.assign(this.subTextEl.style, subTextStyle);
 
     const miniTextStyle = {
       position: 'relative', right: '50px',
@@ -90,20 +95,45 @@ class MjSectionTextalone extends MjSection {
       color: Colour.gray60, filter: 'blur(5px)', opacity: 0,
       transition: 'transform 2s, opacity 2s, filter 2s',
     };
-    Object.assign(miniTextElement.style, miniTextStyle);
+    Object.assign(this.miniTextEl.style, miniTextStyle);
+
+    const mirrorStyle = {
+      position: 'absolute', width: '100%', height: '100%',
+      margin: 0, padding: 0, border: 0,
+      backgroundColor: Colour.transparent, backdropFilter: 'blur(3px)',
+      zIndex: '0',
+    };
+    Object.assign(this.mirrorEl.style, mirrorStyle);
+
+    const blurredBgStyle = {
+      position: 'absolute',
+      width: 'auto', height: '40%',
+      margin: 0, padding: 0, border: 0,
+      zIndex: '-1', opacity: 0.25,
+    };
+    Object.assign(this.blurredBgEl.style, blurredBgStyle);
 
     // Append ==================================================================   
 
-    this.appendChild(mainTextElement);
-    this.appendChild(subTextElement);
-    this.appendChild(miniTextElement);
+    this.appendChild(this.mirrorEl);
+    this.appendChild(this.blurredBgEl);
+    this.appendChild(this.mainTextEl);
+    this.appendChild(this.subTextEl);
+    this.appendChild(this.miniTextEl);
 
     // Events ==================================================================
 
-    const clientHeight = document.documentElement.clientHeight;
-    if (this.getBoundingClientRect().top < clientHeight) {
-      this.setAttribute('showing', 'true');
-    }
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.parentElement.setAttribute('showing', 'true');
+        }
+        else {
+          entry.target.parentElement.setAttribute('showing', 'false');
+        }
+      });
+    });
+    observer.observe(this.mainTextEl);
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
@@ -139,6 +169,58 @@ class MjSectionTextalone extends MjSection {
   }
 }
 
+
+class MjSectionDual extends MjSection {
+
+  constructor() {
+    super();
+    this.containerRight = document.createElement('div');
+    this.containerLeft = document.createElement('div');
+    this.ImgEl = document.createElement('img');
+    this.headingEl = document.createElement('h1');
+    this.paragraphEl = document.createElement('p');
+  }
+
+  connectedCallback() {
+    // mj-section-dual
+    // Inherited from mj-section
+    super.connectedCallback();
+    this.setAttribute('showing', 'false');
+
+    // Attributes ==============================================================
+
+    const imgSrc = this.getAttribute('image-src');
+    const imgPos = this.getAttribute('image-position');
+
+    // Children ================================================================
+
+    
+
+    // Styles ==================================================================
+
+    // Append ==================================================================
+
+    this.appendChild(this.containerLeft);
+    this.appendChild(this.containerRight);
+    if (imgPos === 'left') {
+      this.containerLeft.appendChild(this.ImgEl);
+      this.containerRight.appendChild(this.headingEl);
+      this.containerRight.appendChild(this.paragraphEl);
+    }
+    else {
+      this.containerRight.appendChild(this.ImgEl);
+      this.containerLeft.appendChild(this.headingEl);
+      this.containerLeft.appendChild(this.paragraphEl);
+    }
+
+    // Events ==================================================================
+
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+
+  }
+}
 
 customElements.define('mj-section', MjSection);
 customElements.define('mj-section-textalone', MjSectionTextalone);
