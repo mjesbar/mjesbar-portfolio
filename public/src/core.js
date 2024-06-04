@@ -36,7 +36,7 @@ Object.assign(body.style, bodyStyle);
 // Font styles =================================================================
 
 // TODO link to google api fonts
-document.body.style.fontFamily = 'Arial';
+document.body.style.fontFamily = 'Roboto, Sans';
 document.body.style.fontSize = '12px';
 
 

@@ -11,6 +11,7 @@ export class Colour {
   static get sageLow()        { return '#9B9B80'; }
   static get persimmon()      { return '#EA580C'; }
   static get persimmonLow()   { return '#CA380C'; }
+  static get persimmonDark()  { return '#A0280C'; }
   static get iceBlue()        { return '#9FFCED'; }
   static get iceBlueLow()     { return '#7FDCED'; }
   static get transparent()    { return 'transparent'; }

@@ -5,20 +5,22 @@ import { Colour } from '/src/palette.js';
 
 class MjSection extends HTMLElement {
 
+  /*
+   * Abstract class for all sections
+   */
 
   static observedAttributes = ['showing'];
 
   constructor() {
     super();
-    // Abstract class
   }
 
   connectedCallback() {
-    // mj-section
-    // |- mj-section-child-class* (Polymorphism)
 
+    // Attributes ==============================================================
+    // Children ================================================================
     // Styles ==================================================================
-
+    
     const MjSectionStyle = {
       width: '100%', height: '100vh',
       margin: 0, padding: 0, border: 0,
@@ -26,13 +28,24 @@ class MjSection extends HTMLElement {
     };
     Object.assign(this.style, MjSectionStyle);
 
-    // Children =================================================================
-    // *Child class will be appended here*
+    // Append ==================================================================
+    // Events ==================================================================
   }
 }
 
 
 class MjSectionTextalone extends MjSection {
+
+  /* Structure
+   *
+   * mj-section-textalone
+   * |-- mainTextEl
+   * |-- subTextEl
+   * |-- miniTextEl
+   * |-- blurredBgEl (absolute)
+   * '-- mirrorEl (absolute)
+   *
+   */
 
   constructor() {
     super();
@@ -44,13 +57,12 @@ class MjSectionTextalone extends MjSection {
   }
 
   connectedCallback() {
-    // mj-section-welcome
-    // Inherited from mj-section
+
     super.connectedCallback();
-    this.setAttribute('showing', 'false');
 
     // Attributes ==============================================================
 
+    this.setAttribute('showing', 'false');
     const mainText = this.getAttribute('main-text');
     const subText = this.getAttribute('sub-text');
     const miniText = this.getAttribute('mini-text');
@@ -137,7 +149,7 @@ class MjSectionTextalone extends MjSection {
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
-    // mj-section-welcome
+    // handle the showing attribute changes
     if (name === 'showing') {
       if (newValue === oldValue) return;
       const mainTextElement = this.querySelector('h1');
@@ -172,6 +184,17 @@ class MjSectionTextalone extends MjSection {
 
 class MjSectionDual extends MjSection {
 
+  /* Structure
+   *
+   * mj-section-dual
+   * |-- ImgEl (absolute)
+   * |-- linesContainer
+   * |   |-- wordEl1
+   * |   |-- wordEl2
+   * |   '-- wordElN...
+   *
+   */
+
   constructor() {
     super();
     this.linesContainer = document.createElement('div');
@@ -180,13 +203,12 @@ class MjSectionDual extends MjSection {
   }
 
   connectedCallback() {
-    // mj-section-dual
-    // Inherited from mj-section
+
     super.connectedCallback();
-    this.setAttribute('showing', 'false');
 
     // Attributes ==============================================================
 
+    this.setAttribute('showing', 'false');
     const imgSrc = this.getAttribute('img-src');
     const imgPos = this.getAttribute('img-pos');
     const lines = this.getAttribute('lines').split(',');
@@ -203,6 +225,7 @@ class MjSectionDual extends MjSection {
       flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
       width: '100%', height: '100vh',
       position: 'relative',
+      overflow: 'hidden',
     };
     Object.assign(this.style, MjSectionOverwriteStyle);
 
@@ -216,46 +239,71 @@ class MjSectionDual extends MjSection {
     Object.assign(this.linesContainer.style, linesContainerStyle);
 
     const ImgStyle = {
-      width: '50%', height: 'auto',
+      width: '50%', height: 'auto', minWidth: '680px', maxWidth: '50%',
       margin: 0, padding: 0, border: 0,
       zIndex: '1',
       position: 'absolute', top: 0, // left: 0, assigned below depend on attribute
+      transition: 'transform 1s',
+      userSelect: 'none',
+      webkitUserSelect: 'none',
+      webkitUserDrag: 'none',
+      msUserSelect: 'none',
+      pointerEvents: 'none',
     };
     Object.assign(this.ImgEl.style, ImgStyle);
 
-    const notEligibleStyle = {
-      fontSize: '14em',
+    const lineStyle = {
       margin: 0, padding: 0, border: 0,
-      color: Colour.gray80,
+      opacity: 0,
+      transition: 'opacity 1s, transform 1s',
+    };
+
+    const notEligibleStyle = {
+      fontSize: '6em',
+      margin: 0, padding: 0, border: 0,
+      color: Colour.gray60,
+      cursor: 'default',
     };
 
     const eligibleStyle = {
-      fontSize: '16em', fontWeight: 'bold',
+      fontSize: '10em', fontWeight: 'bold',
       margin: 0, padding: 0, border: 0,
+      cursor: 'pointer',
+      transition: 'color 0.25s, font-size 0.25s',
     };
 
     // Append ==================================================================
 
     this.appendChild(this.linesContainer);
 
+    // apending lines and words
+    let lineNumber = 0;
     for (const line of lines) {
       const elegibleWords = ['work', 'service', 'about', 'contact'];
       const words = line.split(' ');
       const lineEl = document.createElement('div');
+      Object.assign(lineEl.style, lineStyle);
       for (const word of words) {
         const wordEl = document.createElement('span');
         wordEl.textContent = word;
         if (elegibleWords.includes(word.toLowerCase())) {
           Object.assign(wordEl.style, eligibleStyle);
+          wordEl.setAttribute('eligible', 'true');
         }
         else {
           Object.assign(wordEl.style, notEligibleStyle);
         }
         lineEl.appendChild(wordEl);
       }
+      lineNumber++;
+      lineEl.setAttribute("line", lineNumber);
+      (lineNumber % 2 === 0)
+        ? lineEl.style.transform = 'translateX(-200px)'
+        : lineEl.style.transform = 'translateX(200px)';
       this.linesContainer.appendChild(lineEl);
     }
 
+    // appending image wheather left or right
     if (imgPos === 'left') {
       this.ImgEl.style.left = 0;
     }
@@ -265,18 +313,111 @@ class MjSectionDual extends MjSection {
     else {
       this.ImgEl.style.left = 50;
     }
-
     this.appendChild(this.ImgEl);
 
     // Events ==================================================================
 
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.parentElement.setAttribute('showing', 'true');
+        }
+        else {
+          entry.target.parentElement.setAttribute('showing', 'false');
+        }
+      });
+    });
+    observer.observe(this.ImgEl);
+
+    this.querySelectorAll('span[eligible="true"]').forEach((el) => {
+      // mouse events
+      el.onmouseenter = () => {
+        const randColor = [
+          Colour.persimmonLow,
+          Colour.iceBlueLow,
+          Colour.sageLow,
+          Colour.persimmon,
+          Colour.iceBlue,
+          Colour.sage,
+        ];
+        el.style.color = randColor[Math.floor(Math.random() * randColor.length)];
+        el.style.fontSize = '14em';
+        el.parentElement.style.zIndex = '2';
+      }
+
+      el.onmouseleave = () => {
+        el.style.color = Colour.white;
+        el.style.fontSize = '10em';
+        el.parentElement.style.zIndex = '0';
+      }
+
+      el.onclick = () => {
+        console.log('click', el.textContent);
+        window.location.href = `/${el.textContent.toLowerCase()}`;
+      }
+    });
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
-
+    // handle the showing attribute changes
+    if (name === 'showing') {
+      if (newValue === oldValue) return;
+      if (newValue === 'true' && oldValue === 'false') {
+        const lineEls = this.linesContainer.children;
+        for (const lineEl of lineEls) {
+          lineEl.style.opacity = 1;
+          lineEl.style.transform = 'translateX(0px)';
+        }
+        this.ImgEl.style.transform = 'translateX(0px)';
+      }
+      else if (newValue === 'false' && oldValue === 'true') {
+        const lineEls = this.linesContainer.children;
+        for (const lineEl of lineEls) {
+          lineEl.style.opacity = 0;
+          (lineEl.getAttribute('line') % 2 === 0)
+            ? lineEl.style.transform = 'translateX(-200px)'
+            : lineEl.style.transform = 'translateX(200px)';
+        }
+        this.ImgEl.style.transform = 'translateY(200px)';
+      }
+    }
   }
 }
+
+
+class MjSectionWork extends MjSection {
+
+  /* Structure
+   *
+   * mj-section-work
+   * |-- workContainer
+   * |   |-- workEl1
+   * |   |-- workEl2
+   * |   '-- workElN...
+   *
+   */
+
+  constructor() {
+    super();
+    this.workContainer = document.createElement('div');
+  }
+
+  connectedCallback() {
+
+    super.connectedCallback();
+
+    // Attributes ==============================================================
+    // Children ================================================================
+    // Styles ==================================================================
+    // Append ==================================================================
+    // Events ==================================================================
+  }
+}
+
+
+
 
 customElements.define('mj-section', MjSection);
 customElements.define('mj-section-textalone', MjSectionTextalone);
 customElements.define('mj-section-dual', MjSectionDual);
+customElements.define('mj-section-work', MjSectionWork);
