@@ -1,37 +1,37 @@
 
 import { Colour } from '/src/palette.js';
+import { MjSection } from '/src/components/mj-section.js';
 
 
 
-export class MjSection extends HTMLElement {
+class MjSectionWork extends MjSection {
 
-  /*
-   * Abstract class for all sections
+  /* Structure
+   *
+   * mj-section-work
+   * |-- workContainer
+   * |   |-- workEl1
+   * |   |-- workEl2
+   * |   '-- workElN...
+   *
    */
-
-  static observedAttributes = ['showing'];
 
   constructor() {
     super();
+    this.workContainer = document.createElement('div');
   }
 
   connectedCallback() {
 
+    super.connectedCallback();
+
     // Attributes ==============================================================
     // Children ================================================================
     // Styles ==================================================================
-    
-    const MjSectionStyle = {
-      width: '100%', height: '100vh',
-      margin: 0, padding: 0, border: 0,
-      backgroundColor: Colour.transparent,
-    };
-    Object.assign(this.style, MjSectionStyle);
-
     // Append ==================================================================
     // Events ==================================================================
   }
 }
 
 
-customElements.define('mj-section', MjSection);
+customElements.define('mj-section-work', MjSectionWork);
