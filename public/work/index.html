@@ -4,9 +4,9 @@
   <head>
     <meta charset="utf-8">
     <title>My Work</title>
-    <script defer type="module" src="/src/palette.js"></script>
+    <script defer type="module" src="/src/components/mj-section-work.js"></script>
     <script defer type="module" src="/src/components/mj-nav.js"></script>
-    <script defer type="module" src="/src/components/mj-section.js"></script>
+    <script type="module" src="/src/palette.js"></script>
     <script type="module" src="/src/core.js"></script>
   </head>
 
@@ -17,7 +17,31 @@
     <main style="display: flex; flex-direction: column; justify-content: start;
     align-items: center; width: 100%; height: auto;">
   
-      <mj-section-work>
+      <mj-section-work
+        subtitle="Literals, Videogame Prototype"
+        description1="Literals is a development that allowed me to improve my systems
+        thinking skills. complex projects and code scalability."
+        description2="Literals is a video game idea that I had a long time ago, and
+        that I have been working on in parallel whenever I can. Although it is a
+        prototype for now, I hope to be able to leverage it as an official release in
+        a store that allows me to distribute it as an indie developer."
+        background-src="/src/assets/patreon-cover.png"
+        media-src="/src/assets/literals1.mp4"
+        icon-top-src="/src/assets/videogame.png"
+        icon-bot-src="/src/assets/joystick.webp"
+        link-url="https://github.com/mjesbar/literals">
+      </mj-section-work>
+
+      <mj-section-work
+        subtitle="Literals, Videogame Prototype"
+        description1="Literals es un desarrollo que me permitió mejorar mis
+        habilidades sobre pensamiento en sistemas, proyectos complejos y
+        escalabilidad de codigo."
+        description2="Literals es una idea de videojuego que tuve hace tiempo, y en
+        el que he estado trabajando de manera paralela siempre que puedo. Aunque
+        es un prototipo por ahora, espero poder apalancarlo como un release oficial
+        en alguna tienda que me permita distribuirlo como desarrollador indie."
+        background-src="/src/assets/patreon-cover.png"
       </mj-section-work>
 
     </main>
