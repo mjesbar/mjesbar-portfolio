@@ -14,15 +14,12 @@ class MjSectionWork extends MjSection {
    * |-- blurredBgEl (absolute) layer:0
    * |-- shadowBgEl (absolute) layer:1
    * |-- workContainer layer:2
-   * |   |-- workText
-   * |   |   |-- workTitle
-   * |   |   '-- workDescription
-   * |   |-- workMedia
-   * |   |-- iconEl1 (absolute)
-   * |   '-- iconEl1 (absolute)
-   * |** miscEl1 (absolute) layer:4
-   * |** miscEl2 (absolute) layer:4
-   * |** miscElN... (absolute) layer:4
+   *     |-- workText
+   *     |   |-- workTitle
+   *     |   '-- workDescription
+   *     |-- workMedia
+   *     |-- iconEl1 (absolute)
+   *     '-- iconEl1 (absolute)
    *
    */
 
@@ -73,6 +70,7 @@ class MjSectionWork extends MjSection {
 
     this.workMediaEl.className = 'work-media';
     this.workMediaEl.autoplay = true;
+    this.workMediaEl.muted = true;
     this.workMediaEl.innerHTML = `
       <source src="${mediaSrc.replace('*', '1')}" type="video/webm">
     `;
@@ -103,6 +101,12 @@ class MjSectionWork extends MjSection {
       overflow: 'hidden',
     });
 
+    Object.assign(this.detectorEl.style, {
+      position: 'absolute', zIndex: '3',
+      width: '100%', height: '1px',
+      margin: 0, padding: 0, border: 0,
+    });
+
     Object.assign(this.blurredBgEl.style, {
       position: 'absolute', zIndex: '0',
       width: '100%', height: '100%',
@@ -127,49 +131,51 @@ class MjSectionWork extends MjSection {
       flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly',
       width: '85%', height: '85%',
       backgroundColor: Colour.transparent,
-      backdropFilter: 'blur(25px)',
+      backdropFilter: 'blur(20px)',
       margin: 0, padding: 0, border: `5px solid ${Colour.gray20}`,
       borderRadius: '10px',
+      transition: 'all 0.5s',
+      opacity: '0.5', transform: 'scale(0.8)',
     });
 
     Object.assign(this.workTextEl.style, {
       display: 'flex',
       flexDirection: 'column', alignItems: 'start', justifyContent: 'center',
-      width: '36%', height: 'auto',
+      width: '30%', height: 'auto',
       margin: 0, padding: '2%', border: 0,
       color: Colour.white,
       fontSize: '1.5em',
+      transition: 'all 1s',
+      transform: 'scale(0.8) translateY(-20%)',
     });
 
     Object.assign(this.workMediaEl.style, {
-      width: '50%', height: 'auto',
+      width: '60%', height: 'auto',
       objectFit: 'contain',
       margin: 0, padding: 0, border: 0,
       borderRadius: '10px',
-    });
-
-    Object.assign(this.detectorEl.style, {
-      position: 'absolute', zIndex: '3',
-      width: '100%', height: '1px',
-      margin: 0, padding: 0, border: 0,
+      transition: 'all 1s',
+      transform: 'scale(0.8) translateY(20%)',
     });
 
     Object.assign(this.iconTopEl.style, {
       position: 'absolute', zIndex: '4', left: '90%', top: '5%',
       width: '20%', height: 'auto',
       margin: 0, padding: 0, border: 0,
-      transform: 'rotate(-15deg)',
+      transition: 'all 1s',
+      transform: 'rotate(-15deg) translateX(200%)',
     });
 
     Object.assign(this.iconBotEl.style, {
-      position: 'absolute', zIndex: '4', left: '-10%', top: '65%',
+      position: 'absolute', zIndex: '4', left: '-15%', top: '65%',
       width: '20%', height: 'auto',
       margin: 0, padding: 0, border: 0,
-      transform: 'rotate(15deg)',
+      transition: 'all 1s',
+      transform: 'rotate(15deg) translateX(-200%)',
     });
     
     Object.assign(this.linkEl.style, {
-      position: 'absolute', zIndex: '4', left: '65%', top: '85%',
+      position: 'absolute', zIndex: '4', left: '40%', top: '90%',
       display: 'flex',
       flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around',
       width: '15%', height: '5%',
@@ -177,6 +183,15 @@ class MjSectionWork extends MjSection {
       color: Colour.white,
       fontSize: '2em',
     });
+    this.linkEl.animate([
+      { transform: 'translateY(0px)' },
+      { transform: 'translateY(10px)' },
+      { transform: 'translateY(0px)' },
+    ], {
+      duration: 1000,
+      iterations: Infinity,
+      easing: 'ease-in-out',
+    })
     
     // Append ==================================================================
 
@@ -190,9 +205,29 @@ class MjSectionWork extends MjSection {
     this.workContainer.appendChild(this.iconBotEl);
     this.workContainer.appendChild(this.linkEl);
 
-    // for loop to append miscElN...
-
     // Events ==================================================================
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          this.workContainer.style.opacity = '1.0';
+          this.workContainer.style.transform = 'scale(1)';
+          this.iconTopEl.style.transform = 'rotate(-15deg) translateX(0%)';
+          this.iconBotEl.style.transform = 'rotate(15deg) translateX(0%)';
+          this.workTextEl.style.transform = 'scale(1) translateY(0%)';
+          this.workMediaEl.style.transform = 'scale(1) translateY(0%)';
+        }
+        else {
+          this.workContainer.style.opacity = '0.5';
+          this.workContainer.style.transform = 'scale(0.8)';
+          this.iconTopEl.style.transform = 'rotate(-15deg) translateX(200%)';
+          this.iconBotEl.style.transform = 'rotate(15deg) translateX(-200%)';
+          this.workTextEl.style.transform = 'scale(0.8) translateY(-20%)';
+          this.workMediaEl.style.transform = 'scale(0.8) translateY(20%)';
+        }
+      });
+    });
+    observer.observe(this.detectorEl);
 
     this.workMediaEl.onended = () => {
       currentMedia = currentMedia + 1 > medias ? 1 : currentMedia + 1;
