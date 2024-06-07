@@ -49,7 +49,8 @@ class MjSectionWork extends MjSection {
     const subtitle = this.getAttribute('subtitle');
     const description1 = this.getAttribute('description1');
     const description2 = this.getAttribute('description2');
-    const mediaSrc = this.getAttribute('media-src');
+    const mediaSrc = this.getAttribute('media-src') || 'none';
+    const medias = this.getAttribute('medias') || 1;
     const iconTopSrc = this.getAttribute('icon-top-src');
     const iconBotSrc = this.getAttribute('icon-bot-src');
     const linkUrl = this.getAttribute('link-url');
@@ -72,10 +73,11 @@ class MjSectionWork extends MjSection {
 
     this.workMediaEl.className = 'work-media';
     this.workMediaEl.autoplay = true;
-    this.workMediaEl.loop = true;
     this.workMediaEl.innerHTML = `
-      <source src="${mediaSrc}" type="video/mp4">
+      <source src="${mediaSrc.replace('*', '1')}" type="video/webm">
     `;
+    let currentMedia = 1;
+    this.workMediaEl.setAttribute('current', currentMedia);
 
     this.iconTopEl.className = 'icon';
     this.iconTopEl.src = iconTopSrc;
@@ -87,7 +89,7 @@ class MjSectionWork extends MjSection {
     this.linkEl.target = '_blank';
     this.linkEl.innerHTML = `
       <p>View Project</p>
-      <img width="auto" height="100%" src="/src/assets/arrow.png" alt="arrow">
+      <img width="auto" height="100%" src="/src/assets/arrow.webp" alt="arrow">
     `;
 
 
@@ -120,10 +122,10 @@ class MjSectionWork extends MjSection {
     });
 
     Object.assign(this.workContainer.style, {
-      position: 'relative', zIndex: '2',
+      position: 'relative', zIndex: '2', top: '3vh',
       display: 'flex',
       flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly',
-      width: '75%', height: '65%',
+      width: '85%', height: '85%',
       backgroundColor: Colour.transparent,
       backdropFilter: 'blur(25px)',
       margin: 0, padding: 0, border: `5px solid ${Colour.gray20}`,
@@ -136,7 +138,7 @@ class MjSectionWork extends MjSection {
       width: '36%', height: 'auto',
       margin: 0, padding: '2%', border: 0,
       color: Colour.white,
-      fontSize: '1.25em',
+      fontSize: '1.5em',
     });
 
     Object.assign(this.workMediaEl.style, {
@@ -153,27 +155,27 @@ class MjSectionWork extends MjSection {
     });
 
     Object.assign(this.iconTopEl.style, {
-      position: 'absolute', zIndex: '4', left: '90%', top: '0%',
+      position: 'absolute', zIndex: '4', left: '90%', top: '5%',
       width: '20%', height: 'auto',
       margin: 0, padding: 0, border: 0,
       transform: 'rotate(-15deg)',
     });
 
     Object.assign(this.iconBotEl.style, {
-      position: 'absolute', zIndex: '4', left: '-10%', top: '75%',
+      position: 'absolute', zIndex: '4', left: '-10%', top: '65%',
       width: '20%', height: 'auto',
       margin: 0, padding: 0, border: 0,
       transform: 'rotate(15deg)',
     });
     
     Object.assign(this.linkEl.style, {
-      position: 'absolute', zIndex: '4', left: '50%', top: '85%',
+      position: 'absolute', zIndex: '4', left: '65%', top: '85%',
       display: 'flex',
       flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around',
       width: '15%', height: '5%',
       margin: 0, padding: 0, border: 0,
       color: Colour.white,
-      fontSize: '1.5em',
+      fontSize: '2em',
     });
     
     // Append ==================================================================
@@ -191,6 +193,15 @@ class MjSectionWork extends MjSection {
     // for loop to append miscElN...
 
     // Events ==================================================================
+
+    this.workMediaEl.onended = () => {
+      currentMedia = currentMedia + 1 > medias ? 1 : currentMedia + 1;
+      const source = this.workMediaEl.querySelector('source');
+      source.setAttribute('current', currentMedia);
+      source.src = mediaSrc.replace('*', currentMedia);
+      this.workMediaEl.load();
+      this.workMediaEl.play();
+    }
   }
 }
 
