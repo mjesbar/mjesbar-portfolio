@@ -110,8 +110,9 @@ class MjSectionWork extends MjSection {
     Object.assign(this.blurredBgEl.style, {
       position: 'absolute', zIndex: '0',
       width: '100%', height: '100%',
-      objectFit: 'contain',
-      opacity: '0.1', filter: 'blur(5px)',
+      margin: 0, padding: 0, border: 0,
+      objectFit: 'cover',
+      opacity: '0.4',
     });
 
     Object.assign(this.shadowBgEl.style, {
@@ -175,7 +176,7 @@ class MjSectionWork extends MjSection {
     });
     
     Object.assign(this.linkEl.style, {
-      position: 'absolute', zIndex: '4', left: '40%', top: '90%',
+      position: 'absolute', zIndex: '4', left: '40%', top: '85%',
       display: 'flex',
       flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around',
       width: '15%', height: '5%',
