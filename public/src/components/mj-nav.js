@@ -87,6 +87,7 @@ class MjNav extends HTMLElement {
       margin: 0, padding: 0, border: 0,
       borderRadius: '50%',
       backgroundColor: Colour.persimmon,
+      boxShadow: '0 0 12px 6px ' + Colour.persimmonLow,
       transition: 'transform 2s, height 0.25s',
     };
     Object.assign(logoCenterIcon.style, logoCenterIconStyle);
@@ -112,8 +113,7 @@ class MjNav extends HTMLElement {
       const logoCenterMisc = document.createElement('div');
       // Set style
       const logoCenterMiscStyle = {
-        position: 'absolute',
-        left: '50%', top: '50%',
+        position: 'absolute', left: '50%', top: '50%', zIndex: -1,
         margin: 0, padding: 0, border: 0,
         transform: 'translate(-50%, -50%) rotate(0deg)',
         transition: 'transform 1s, opacity 0.25s',
@@ -129,8 +129,8 @@ class MjNav extends HTMLElement {
 
     logoContainer.onmouseenter = () => {
       // Animate logo
-      logoContainer.style.transform = 'scale(1.5) translateY(25%)';
-      logoCenterIcon.style.height = '50%';
+      logoContainer.style.transform = 'scale(1.6) translateY(25%)';
+      logoCenterIcon.style.height = '30%';
       logoLeftText.style.transform = 'translateY(-25%)';
       logoRightText.style.transform = 'translateY(25%)';
       const rings = logoCenterIcon.querySelectorAll('div')
@@ -148,8 +148,7 @@ class MjNav extends HTMLElement {
         ]
         // Set style
         const logoCenterMiscStyle = {
-          position: 'absolute',
-          left: '50%', top: '50%',
+          position: 'absolute', left: '50%', top: '50%',
           width: 'auto', height: ringSize + '%', aspectRatio: '1 / 1',
           margin: 0, padding: 0,
           borderRadius: '100%',
