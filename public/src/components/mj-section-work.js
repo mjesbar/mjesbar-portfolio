@@ -42,6 +42,7 @@ class MjSectionWork extends MjSection {
 
     // Attributes ==============================================================
     
+    this.setAttribute('showing', false);
     const backgroundUrl = this.getAttribute('background-src');
     const subtitle = this.getAttribute('subtitle');
     const description1 = this.getAttribute('description1');
@@ -211,6 +212,29 @@ class MjSectionWork extends MjSection {
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
+          this.setAttribute('showing', true);
+        }
+        else {
+          this.setAttribute('showing', false);
+        }
+      });
+    });
+    observer.observe(this.detectorEl);
+
+    this.workMediaEl.onended = () => {
+      currentMedia = currentMedia + 1 > medias ? 1 : currentMedia + 1;
+      const source = this.workMediaEl.querySelector('source');
+      source.setAttribute('current', currentMedia);
+      source.src = mediaSrc.replace('*', currentMedia);
+      this.workMediaEl.load();
+      this.workMediaEl.play();
+    }
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    switch (name) {
+      case 'showing':
+        if (newValue === 'true') {
           this.workContainer.style.opacity = '1.0';
           this.workContainer.style.transform = 'scale(1)';
           this.iconTopEl.style.transform = 'rotate(-15deg) translateX(0%)';
@@ -226,17 +250,9 @@ class MjSectionWork extends MjSection {
           this.workTextEl.style.transform = 'scale(0.8) translateY(-20%)';
           this.workMediaEl.style.transform = 'scale(0.8) translateY(20%)';
         }
-      });
-    });
-    observer.observe(this.detectorEl);
-
-    this.workMediaEl.onended = () => {
-      currentMedia = currentMedia + 1 > medias ? 1 : currentMedia + 1;
-      const source = this.workMediaEl.querySelector('source');
-      source.setAttribute('current', currentMedia);
-      source.src = mediaSrc.replace('*', currentMedia);
-      this.workMediaEl.load();
-      this.workMediaEl.play();
+        break;
+      default:
+        break;
     }
   }
 }

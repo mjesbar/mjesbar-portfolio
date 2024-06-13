@@ -30,7 +30,7 @@ class MjSectionDual extends MjSection {
 
     // Attributes ==============================================================
 
-    this.setAttribute('showing', 'false');
+    this.setAttribute('showing', false);
     const imgSrc = this.getAttribute('img-src');
     const imgPos = this.getAttribute('img-pos');
     const lines = this.getAttribute('lines').split(',');
@@ -107,7 +107,7 @@ class MjSectionDual extends MjSection {
         wordEl.textContent = word;
         if (elegibleWords.includes(word.toLowerCase())) {
           Object.assign(wordEl.style, eligibleStyle);
-          wordEl.setAttribute('eligible', 'true');
+          wordEl.setAttribute('eligible', true);
         }
         else {
           Object.assign(wordEl.style, notEligibleStyle);
@@ -139,10 +139,10 @@ class MjSectionDual extends MjSection {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          entry.target.parentElement.setAttribute('showing', 'true');
+          entry.target.parentElement.setAttribute('showing', true);
         }
         else {
-          entry.target.parentElement.setAttribute('showing', 'false');
+          entry.target.parentElement.setAttribute('showing', false);
         }
       });
     });
