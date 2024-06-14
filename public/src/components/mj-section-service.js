@@ -1,9 +1,8 @@
-// copy te class struture of the file mj-section-work.js and paste it in the file
-// mj-section-service.js, omit the content, just take her the general skeleton.
-// Attributes, Styles, Children, and Events.
 
 import { Colour } from '/src/palette.js';
 import { MjSection } from '/src/components/mj-section.js';
+
+
 
 class MjSectionService extends MjSection {
 
@@ -11,30 +10,25 @@ class MjSectionService extends MjSection {
    *
    * mj-section-service
    * |
-   * |-- detectorEl (relative) layer:0
-   * |-- blurredBgEl (absolute) layer:0
-   * |-- shadowBgEl (absolute) layer:1
-   * |-- serviceContainer layer:2
-   *     |-- serviceText
-   *     |   |-- serviceTitle
-   *     |   '-- serviceDescription
-   *     |-- serviceMedia
-   *     |-- iconEl1 (absolute)
-   *     '-- iconEl1 (absolute)
+   * |-- detectorEl layer:0
+   * |-- gradientBgEl (absolute) layer:0
+   * |-- serviceContainer layer:1
+   * |   |-- serviceText
+   * |   |   |** serviceTitle
+   * |   |   '** serviceDescription
+   * |   '-- serviceMedia
+   * '-- switchEl layer:2
    *
    */
 
   constructor() {
     super();
-    this.blurredBgEl = document.createElement('img');
-    this.shadowBgEl = document.createElement('div');
-    this.serviceContainer = document.createElement('div');
-    this.serviceTextEl = document.createElement('div');
-    this.serviceMediaEl = document.createElement('video');
     this.detectorEl = document.createElement('div');
-    this.iconTopEl = document.createElement('img');
-    this.iconBotEl = document.createElement('img');
-    this.linkEl = document.createElement('a');
+    this.gradientBgEl = document.createElement('div');
+    this.serviceContainer = document.createElement('div');
+    this.serviceText = document.createElement('div');
+    this.serviceMedia = document.createElement('img');
+    this.switchEl = document.createElement('div');
   }
 
   connectedCallback() {
@@ -42,15 +36,133 @@ class MjSectionService extends MjSection {
     super.connectedCallback();
 
     // Attributes ==============================================================
+
+    this.setAttribute('showing', false);
+    const subtitle = this.getAttribute('subtitle');
+    const description = this.getAttribute('description');
+    const imgSrc = this.getAttribute('img-src');
     
     // Children ================================================================
-    
+
+    this.detectorEl.className = 'detector';
+
+    this.gradientBgEl.className = 'gradient-bg';
+
+    this.serviceContainer.className = 'service-container';
+
+    this.serviceText.className = 'service-text';
+    this.serviceText.innerHTML = `
+      <h1 class="service-title">${subtitle}</h1>
+      <p class="service-description">${description}</p>
+    `;
+
+    this.serviceMedia.className = 'service-media';
+    this.serviceMedia.src = imgSrc;
+
+    this.switchEl.className = 'switch';
+
     // Styles ==================================================================
-    
+      
+    Object.assign(this.style, {
+      position: 'relative', zIndex: '0',
+      display: 'flex',
+      flexDirection: 'row', justifyContent: 'center', alignItems: 'center',
+      overflow: 'visible',
+    });
+
+    Object.assign(this.detectorEl, {
+      position: 'absolute', zIndex: '0',
+      width: '100%', height: '1px',
+      margin: 0, padding: 0, border: 0,
+    });
+
+    Object.assign(this.gradientBgEl.style, {
+      position: 'absolute', zIndex: '0',
+      width: '100%', height: '100%',
+      margin: 0, padding: 0, border: 0,
+      backgroundImage: 'linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,1))',
+    });
+
+    Object.assign(this.serviceContainer.style, {
+      position: 'relative', zIndex: '1',
+      display: 'flex',
+      flexDirection: 'column', justifyContent: 'center', alignItems: 'center',
+      width: '100%', height: '100%',
+      margin: 0, padding: 0, border: 0,
+      transition: 'all 0.5s',
+    });
+
+    Object.assign(this.serviceText.style, {
+      display: 'flex',
+      flexDirection: 'column', justifyContent: 'center', alignItems: 'center',
+      width: '100%', height: '50%',
+      margin: 0, padding: 0, border: 0,
+      fontSize: '1.2em',
+    });
+
+    Object.assign(this.serviceMedia.style, {
+      width: 'auto', height: '40%',
+      margin: 0, padding: 0, border: 0,
+    });
+
+    Object.assign(this.switchEl.style, {
+      position: 'absolute', zIndex: '2', left: '0',
+      width: '2vw', height: '100%',
+      margin: 0, padding: 0, border: 0,
+      backgroundColor: [
+        Colour.persimmon,
+        Colour.persimmonLow,
+        Colour.persimmonDark,
+        Colour.iceBlue,
+        Colour.iceBlueLow,
+        Colour.sage,
+        Colour.sageLow,
+      ][Math.floor(Math.random() * 7)],
+      transition: 'all 0.5s',
+    });
+
     // Append ==================================================================
+
+    this.appendChild(this.detectorEl);
+    this.appendChild(this.gradientBgEl);
+    this.appendChild(this.serviceContainer);
+    this.serviceContainer.appendChild(this.serviceText);
+    this.serviceContainer.appendChild(this.serviceMedia);
+    this.appendChild(this.switchEl);
 
     // Events ==================================================================
 
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          this.setAttribute('showing', true);
+        } else {
+          this.setAttribute('showing', false);
+        }
+      });
+    });
+    observer.observe(this.detectorEl);
   }
 
+  attributeChangedCallback(name, oldValue, newValue) {
+    switch (name) {
+      case 'showing':
+        if (newValue === 'true') {
+          this.switchEl.style.width = '10vw';
+          this.serviceContainer.style.opacity = 1;
+          this.serviceContainer.style.transform = 'translateX(0%)';
+        }
+        else if (newValue === 'false') {
+          this.switchEl.style.width = '2vw';
+          this.serviceContainer.style.opacity = 0;
+          this.serviceContainer.style.transform = 'translateX(-50%)';
+        }
+        break;
+      default:
+        break;
+    }
+  }
 }
+
+
+customElements.define('mj-section-service', MjSectionService);
