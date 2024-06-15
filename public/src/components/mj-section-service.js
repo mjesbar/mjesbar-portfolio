@@ -11,7 +11,8 @@ class MjSectionService extends MjSection {
    * mj-section-service
    * |
    * |-- detectorEl layer:0
-   * |-- gradientBgEl (absolute) layer:0
+   * |-- planeBgEl layer:0
+   * |-- gradientBgEl layer:0
    * |-- serviceContainer layer:1
    * |   |-- serviceText
    * |   |   |** serviceTitle
@@ -24,6 +25,7 @@ class MjSectionService extends MjSection {
   constructor() {
     super();
     this.detectorEl = document.createElement('div');
+    this.planeBgEl = document.createElement('img');
     this.gradientBgEl = document.createElement('div');
     this.serviceContainer = document.createElement('div');
     this.serviceText = document.createElement('div');
@@ -45,6 +47,9 @@ class MjSectionService extends MjSection {
     // Children ================================================================
 
     this.detectorEl.className = 'detector';
+
+    this.planeBgEl.className = 'plane-bg';
+    this.planeBgEl.src = '/src/assets/plane-bg.webp';
 
     this.gradientBgEl.className = 'gradient-bg';
 
@@ -76,11 +81,20 @@ class MjSectionService extends MjSection {
       margin: 0, padding: 0, border: 0,
     });
 
+    Object.assign(this.planeBgEl.style, {
+      position: 'absolute', zIndex: '0',
+      width: '100%', height: '100%',
+      margin: 0, padding: 0, border: 0,
+      objectFit: 'fill',
+    });
+
     Object.assign(this.gradientBgEl.style, {
       position: 'absolute', zIndex: '0',
       width: '100%', height: '100%',
       margin: 0, padding: 0, border: 0,
-      backgroundImage: 'linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,1))',
+      backgroundImage: `linear-gradient(
+        to bottom, ${Colour.black} 10%, ${Colour.transparent80} 50%, ${Colour.black} 90%
+      )`,
     });
 
     Object.assign(this.serviceContainer.style, {
@@ -89,15 +103,16 @@ class MjSectionService extends MjSection {
       flexDirection: 'column', justifyContent: 'center', alignItems: 'center',
       width: '100%', height: '100%',
       margin: 0, padding: 0, border: 0,
-      transition: 'all 0.5s',
+      transition: 'all 1s',
     });
 
     Object.assign(this.serviceText.style, {
       display: 'flex',
       flexDirection: 'column', justifyContent: 'center', alignItems: 'center',
-      width: '100%', height: '50%',
+      width: '50%', height: '50%',
       margin: 0, padding: 0, border: 0,
-      fontSize: '1.2em',
+      fontSize: '1.5em',
+      textAlign: 'center',
     });
 
     Object.assign(this.serviceMedia.style, {
@@ -118,12 +133,13 @@ class MjSectionService extends MjSection {
         Colour.sage,
         Colour.sageLow,
       ][Math.floor(Math.random() * 7)],
-      transition: 'all 0.5s',
+      transition: 'all 1s',
     });
 
     // Append ==================================================================
 
     this.appendChild(this.detectorEl);
+    this.appendChild(this.planeBgEl);
     this.appendChild(this.gradientBgEl);
     this.appendChild(this.serviceContainer);
     this.serviceContainer.appendChild(this.serviceText);
