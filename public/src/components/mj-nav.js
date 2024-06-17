@@ -210,6 +210,12 @@ class MjNav extends HTMLElement {
     }
 
     this.querySelectorAll('button').forEach((button) => {
+
+      if (button.innerHTML.toLowerCase() === window.location.pathname.split('/')[1]) {
+        button.style.color = Colour.sageLow;
+      }
+      else {
+
       button.onclick = () => {
         // Redirect to respective section
         window.location.href = '/' + button.innerHTML.toLowerCase();
@@ -223,6 +229,7 @@ class MjNav extends HTMLElement {
       button.onmouseleave = () => {
         // Reset button
         button.style.color = Colour.white;
+      }
       }
     });
   }
