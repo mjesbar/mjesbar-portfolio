@@ -168,7 +168,7 @@ class MjSectionWork extends MjSection {
     });
 
     Object.assign(this.iconBotEl.style, {
-      position: 'absolute', zIndex: '4', left: '-15%', top: '65%',
+      position: 'absolute', zIndex: '4', left: '-18%', top: '50%',
       width: '20%', height: 'auto',
       margin: 0, padding: 0, border: 0,
       transition: 'all 1s',
