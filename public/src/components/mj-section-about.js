@@ -60,7 +60,7 @@ class MjSectionAbout extends MjSection {
     Object.assign(this.aboutSubtitleEl.style, {
       display: 'flex',
       alignItems: 'center', justifyContent: 'center',
-      width: '60%', height: '10vh',
+      width: '80%', height: '5vh',
       fontSize: '2.5em', fontWeight: 'bold',
       transition: 'all 0.5s',
       opacity: 0,
@@ -68,7 +68,7 @@ class MjSectionAbout extends MjSection {
     });
 
     Object.assign(this.aboutDescriptionEl.style, {
-      width: '60%', height: '30vh',
+      width: '80%', height: 'auto',
       textAlign: 'center',
       fontSize: '1.5em',
       transition: 'all 0.5s',
@@ -77,8 +77,8 @@ class MjSectionAbout extends MjSection {
     });
 
     Object.assign(this.aboutPhotoEl.style, {
-      marginTop: '5vh',
-      width: 'auto', height: '30vh',
+      marginTop: '2vh',
+      width: 'auto', height: '10vh',
       borderRadius: '50%',
       transition: 'all 0.5s',
       opacity: 0,
