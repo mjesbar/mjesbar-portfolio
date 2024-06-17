@@ -10,6 +10,11 @@ class MjNav extends HTMLElement {
   constructor() {
     super();
     this.setAttribute('showing', true);
+    this.logoContainer = document.createElement('div');
+    this.logoLeftText = document.createElement('span');
+    this.logoCenterIcon = document.createElement('div');
+    this.logoRightText = document.createElement('span');
+    this.currentNav = document.createElement('button');
   }
 
   hideMjNavBar() {
@@ -24,30 +29,31 @@ class MjNav extends HTMLElement {
 
     // Dynamic logo, omnipresent link to home
     // mj-nav
-    // |- logoContainer
-    //   |- logoLeftText
-    //   |- logoCenterIcon
-    //     |- logoCenterMisc1
-    //     |- logoCenterMisc2
-    //     |- ...
-    //     |- logoCenterMiscN
-    //  |- logoRightText
+    // |-- currentNav (work)
+    // |-- currentNav (service)
+    // |-- logoContainer
+    // | |-- logoLeftText
+    // | |-- logoCenterIcon
+    // | |  |-- logoCenterMisc1
+    // | |  |-- logoCenterMisc2
+    // | |  |-- ...
+    // | |  '-- logoCenterMiscN
+    // | '-- logoRightText
+    // |-- currentNav (about)
+    // '-- currentNav (contact)
 
     // Attributes ==============================================================
 
     // Children ================================================================
 
-    const logoContainer = document.createElement('div');
-    const logoLeftText = document.createElement('span');
-    const logoCenterIcon = document.createElement('div');
-    const logoRightText = document.createElement('span');
 
-    logoLeftText.textContent = 'Mjesbar';
-    logoRightText.textContent = 'Dev';
+    this.logoLeftText.innerHTML = 'Mjesbar';
+    this.logoRightText.innerHTML = 'Dev';
+    this.currentNav.innerHTML = 'current';
 
     // Styles ==================================================================
 
-    const mjNavStyle = {
+    Object.assign(this.style, {
       display: 'flex',
       flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
       position: 'fixed', zIndex: 10, top: 0, left: 0,
@@ -55,20 +61,20 @@ class MjNav extends HTMLElement {
       backgroundColor: Colour.black, color: Colour.white,
       overflow: 'visible',
       transition: 'transform 0.25s',
-    };
-    Object.assign(this.style, mjNavStyle);
+    });
 
-    const logoContainerStyle = {
+    Object.assign(this.logoContainer.style, {
+      position: 'relative', zIndex: 1,
       display: 'flex',
       flexDirection: 'row', alignItems: 'center', justifyContent: 'center',
-      width: '450px', height: '100%',
+      width: '30vw', height: '100%',
       margin: 0, padding: 0, border: 0,
       backgroundColor: Colour.transparent, color: Colour.white,
       transition: 'transform 0.25s',
-    };
-    Object.assign(logoContainer.style, logoContainerStyle);
+      cursor: 'pointer',
+    });
 
-    const logoLeftTextStyle = {
+    Object.assign(this.logoLeftText.style, {
       display: 'flex',
       alignItems: 'center', justifyContent: 'center',
       width: '33.33%', height: '100%',
@@ -76,10 +82,9 @@ class MjNav extends HTMLElement {
       backgroundColor: Colour.transparent, color: Colour.white,
       fontSize: '16px', fontWeight: 'bold',
       transition: 'transform 0.5s',
-    };
-    Object.assign(logoLeftText.style, logoLeftTextStyle);
+    });
 
-    const logoCenterIconStyle = {
+    Object.assign(this.logoCenterIcon.style, {
       position: 'relative',
       display: 'flex',
       alignItems: 'center', justifyContent: 'center',
@@ -89,10 +94,9 @@ class MjNav extends HTMLElement {
       backgroundColor: Colour.persimmon,
       boxShadow: '0 0 12px 6px ' + Colour.persimmonLow,
       transition: 'transform 2s, height 0.25s',
-    };
-    Object.assign(logoCenterIcon.style, logoCenterIconStyle);
+    });
 
-    const logoRightTextStyle = {
+    Object.assign(this.logoRightText.style, {
       display: 'flex',
       alignItems: 'center', justifyContent: 'center',
       width: '33.33%', height: '100%',
@@ -100,40 +104,63 @@ class MjNav extends HTMLElement {
       backgroundColor: Colour.transparent, color: Colour.white,
       fontSize: '16px', fontWeight: 'bold',
       transition: 'transform 0.5s',
-    };
-    Object.assign(logoRightText.style, logoRightTextStyle);
+    });
+
+    Object.assign(this.currentNav.style, {
+      position: 'relative', zIndex: 2,
+      display: 'flex',
+      alignItems: 'center', justifyContent: 'center',
+      width: '10%', height: '70%',
+      margin: 0, padding: 0, border: 0,
+      backgroundColor: Colour.transparent, color: Colour.white,
+      fontWeight: 'bold', fontSize: '18px',
+      cursor: 'pointer',
+      transition: 'all 0.5s',
+    });
 
     // Append ==================================================================
 
-    logoContainer.appendChild(logoLeftText);
-    logoContainer.appendChild(logoCenterIcon);
+
+    const currentWork = this.currentNav.cloneNode(true);
+    currentWork.innerHTML = 'Work';
+    this.appendChild(currentWork);
+    const currentService = this.currentNav.cloneNode(true);
+    currentService.innerHTML = 'Service';
+    this.appendChild(currentService);
+    this.logoContainer.appendChild(this.logoLeftText);
+    this.logoContainer.appendChild(this.logoCenterIcon);
 
     const numberOfRings = 5;
     for (let i = 0; i < numberOfRings; i++) {
       const logoCenterMisc = document.createElement('div');
       // Set style
-      const logoCenterMiscStyle = {
+      Object.assign(logoCenterMisc.style, {
         position: 'absolute', left: '50%', top: '50%', zIndex: -1,
         margin: 0, padding: 0, border: 0,
         transform: 'translate(-50%, -50%) rotate(0deg)',
         transition: 'transform 1s, opacity 0.25s',
-      };
-      Object.assign(logoCenterMisc.style, logoCenterMiscStyle);
-      logoCenterIcon.appendChild(logoCenterMisc);
+      });
+      this.logoCenterIcon.appendChild(logoCenterMisc);
     }
 
-    logoContainer.appendChild(logoRightText);
-    this.appendChild(logoContainer);
+    this.logoContainer.appendChild(this.logoRightText);
+    this.appendChild(this.logoContainer);
+    const currentAbout = this.currentNav.cloneNode(true);
+    currentAbout.innerHTML = 'About';
+    this.appendChild(currentAbout);
+    const currentContact = this.currentNav.cloneNode(true);
+    currentContact.innerHTML = 'Contact';
+    this.appendChild(currentContact);
 
     // Events ==================================================================
 
-    logoContainer.onmouseenter = () => {
+    this.logoContainer.onmouseenter = () => {
       // Animate logo
-      logoContainer.style.transform = 'scale(1.6) translateY(25%)';
-      logoCenterIcon.style.height = '30%';
-      logoLeftText.style.transform = 'translateY(-25%)';
-      logoRightText.style.transform = 'translateY(25%)';
-      const rings = logoCenterIcon.querySelectorAll('div')
+      this.logoContainer.style.transform = 'scale(1.6) translateY(25%)';
+      this.logoCenterIcon.style.height = '30%';
+      this.logoLeftText.style.transform = 'translateY(-25%)';
+      this.logoRightText.style.transform = 'translateY(25%)';
+      const rings = this.logoCenterIcon.querySelectorAll('div')
       for (let i = 0; i < rings.length; i++) {
         // Randomize traits
         const borderSize = 5 * (rings.length - i) - Math.floor(Math.random() * 2);
@@ -147,7 +174,7 @@ class MjNav extends HTMLElement {
           Colour.persimmonLow,
         ]
         // Set style
-        const logoCenterMiscStyle = {
+        Object.assign(rings[i].style, {
           position: 'absolute', left: '50%', top: '50%',
           width: 'auto', height: ringSize + '%', aspectRatio: '1 / 1',
           margin: 0, padding: 0,
@@ -158,18 +185,17 @@ class MjNav extends HTMLElement {
           backgroundColor: Colour.transparent,
           transform: `translate(-50%, -50%) rotate(${rotation}deg)`,
           opacity: 1.0,
-        };
-        Object.assign(rings[i].style, logoCenterMiscStyle);
+        });
       }
     }
 
-    logoContainer.onmouseleave = () => {
+    this.logoContainer.onmouseleave = () => {
       // Reset logo
-      logoContainer.style.transform = 'scale(1) translateY(0)';
-      logoCenterIcon.style.height = '10%';
-      logoLeftText.style.transform = 'translateY(25%)';
-      logoRightText.style.transform = 'translateY(-25%)';
-      logoCenterIcon.querySelectorAll('div').forEach((ring) => {
+      this.logoContainer.style.transform = 'scale(1) translateY(0)';
+      this.logoCenterIcon.style.height = '10%';
+      this.logoLeftText.style.transform = 'translateY(25%)';
+      this.logoRightText.style.transform = 'translateY(-25%)';
+      this.logoCenterIcon.querySelectorAll('div').forEach((ring) => {
         ring.style.backgroundColor = Colour.transparent;
         ring.style.left = '50%';
         ring.style.top = '50%';
@@ -178,10 +204,27 @@ class MjNav extends HTMLElement {
       });
     }
 
-    logoContainer.onclick = () => {
+    this.logoContainer.onclick = () => {
       // Redirect to home
       window.location.href = '/';
     }
+
+    this.querySelectorAll('button').forEach((button) => {
+      button.onclick = () => {
+        // Redirect to respective section
+        window.location.href = '/' + button.innerHTML.toLowerCase();
+      }
+
+      button.onmouseenter = () => {
+        // Animate button
+        button.style.color = Colour.persimmonLow;
+      }
+
+      button.onmouseleave = () => {
+        // Reset button
+        button.style.color = Colour.white;
+      }
+    });
   }
 
   attributeChangedCallback(name, oldValue, newValue) {

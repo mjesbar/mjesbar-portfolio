@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <title>Mjesbar About</title>
+    <link rel="icon" type="image/webp" href="/src/assets/meta-image.webp">
+    <script defer type="module" src="/src/components/mj-section-about.js"></script>
+    <script defer type="module" src="/src/components/mj-nav.js"></script>
+    <script type="module" src="/src/palette.js"></script>
+    <script type="module" src="/src/core.js"></script>
+  </head>
+
+  <body>
+    <header>
+      <mj-nav></mj-nav>
+    </header>
+    <main style="display: flex; flex-direction: column; justify-content: start;
+    align-items: center; width: 100%; height: auto;">
+  
+      <mj-section-about
+        subtitle="About Me"
+        description="As an experienced software engineer, I have honed my skills in
+        developing robust and efficient desktop and server-side applications using C++
+        and Python. These powerful programming languages allow me to create
+        high-performance, scalable, and cross-platform solutions that cater to a wide
+        range of business needs.
+        <br><br>
+        With a strong foundation in object-oriented programming and a deep
+        understanding of data structures and algorithms, I am adept at designing and
+        implementing complex software systems. Whether it's building custom desktop
+        applications, developing server-side APIs, or integrating with various
+        databases and cloud services, I am well-equipped to tackle a diverse range of
+        software development challenges."
+        photo="/src/assets/meta-image.webp">
+      </mj-section-about>
+
+    </main>
+  </body>
+
+</html>
