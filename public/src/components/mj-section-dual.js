@@ -9,6 +9,7 @@ class MjSectionDual extends MjSection {
   /* Structure
    *
    * mj-section-dual
+   * |-- detector
    * |-- ImgEl (absolute)
    * |-- linesContainer
    * |   |-- wordEl1
@@ -19,6 +20,7 @@ class MjSectionDual extends MjSection {
 
   constructor() {
     super();
+    this.detector = document.createElement('div');
     this.linesContainer = document.createElement('div');
     this.ImgEl = document.createElement('img');
     this.wordEl = document.createElement('h1');
@@ -48,6 +50,12 @@ class MjSectionDual extends MjSection {
       width: '100%', height: '100vh',
       position: 'relative',
       overflow: 'hidden',
+    });
+
+    Object.assign(this.detector.style, {
+      position: 'absolute', zIndex: '3',
+      width: '100%', height: '1px',
+      margin: 0, padding: 0, border: 0,
     });
 
     Object.assign(this.linesContainer.style, {
@@ -93,6 +101,7 @@ class MjSectionDual extends MjSection {
 
     // Append ==================================================================
 
+    this.appendChild(this.detector);
     this.appendChild(this.linesContainer);
 
     // apending lines and words
@@ -146,7 +155,7 @@ class MjSectionDual extends MjSection {
         }
       });
     });
-    observer.observe(this.ImgEl);
+    observer.observe(this.detector);
 
     this.querySelectorAll('span[eligible="true"]').forEach((el) => {
       // mouse events
