@@ -158,8 +158,8 @@ class MjNav extends HTMLElement {
       // Animate logo
       this.logoContainer.style.transform = 'scale(1.6) translateY(25%)';
       this.logoCenterIcon.style.height = '30%';
-      this.logoLeftText.style.transform = 'translateY(-25%)';
-      this.logoRightText.style.transform = 'translateY(25%)';
+      this.logoLeftText.style.transform = 'translateY(-40%)';
+      this.logoRightText.style.transform = 'translateY(40%)';
       const rings = this.logoCenterIcon.querySelectorAll('div')
       for (let i = 0; i < rings.length; i++) {
         // Randomize traits
@@ -193,8 +193,8 @@ class MjNav extends HTMLElement {
       // Reset logo
       this.logoContainer.style.transform = 'scale(1) translateY(0)';
       this.logoCenterIcon.style.height = '10%';
-      this.logoLeftText.style.transform = 'translateY(25%)';
-      this.logoRightText.style.transform = 'translateY(-25%)';
+      this.logoLeftText.style.transform = 'translateY(0%)';
+      this.logoRightText.style.transform = 'translateY(0%)';
       this.logoCenterIcon.querySelectorAll('div').forEach((ring) => {
         ring.style.backgroundColor = Colour.transparent;
         ring.style.left = '50%';
