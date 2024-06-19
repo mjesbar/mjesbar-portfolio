@@ -56,22 +56,24 @@ class MjSectionTextalone extends MjSection {
     Object.assign(this.mainTextEl.style, {
       position: 'relative',
       fontSize: '3em',
-      transform: 'translateY(-100px)',
       color: Colour.white, filter: 'blur(3px)', opacity: 0,
+      transform: 'translateY(-100px)',
       transition: 'transform 1s, opacity 1s, filter 1s',
     });
 
     Object.assign(this.subTextEl.style, {
       position: 'relative', left: '60px',
-      transform: 'translateX(200px)',
       color: Colour.gray80, filter: 'blur(3px)', opacity: 0,
+      fontSize: '2em',
+      transform: 'translateX(200px)',
       transition: 'transform 1.5s, opacity 1.5s, filter 1.5s',
     });
 
     Object.assign(this.miniTextEl.style, {
       position: 'relative', right: '50px',
-      transform: 'translateX(-200px)',
+      fontSize: '1.5em',
       color: Colour.gray60, filter: 'blur(3px)', opacity: 0,
+      transform: 'translateX(-200px)',
       transition: 'transform 2s, opacity 2s, filter 2s',
     });
 
