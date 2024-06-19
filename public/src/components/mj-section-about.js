@@ -55,6 +55,15 @@ class MjSectionAbout extends MjSection {
       position: 'relative',
       display: 'flex',
       flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+      backgroundImage: `linear-gradient(
+        to bottom, ${Colour.black} 20%,${Colour.blackLow})
+      `,
+    });
+
+    Object.assign(this.detectorEl.style, {
+      position: 'absolute',
+      width: '100%', height: '1px',
+      backgroundColor: Colour.transparent, color: Colour.transparent,
     });
 
     Object.assign(this.aboutSubtitleEl.style, {
@@ -69,7 +78,7 @@ class MjSectionAbout extends MjSection {
 
     Object.assign(this.aboutDescriptionEl.style, {
       width: '80%', height: 'auto',
-      textAlign: 'center',
+      textAlign: 'left',
       fontSize: '1.5em',
       transition: 'all 0.5s',
       opacity: 0,
@@ -83,12 +92,6 @@ class MjSectionAbout extends MjSection {
       transition: 'all 0.5s',
       opacity: 0,
       transform: 'translateY(50px)',
-    });
-
-    Object.assign(this.detectorEl.style, {
-      position: 'absolute',
-      width: '100%', height: '1px',
-      backgroundColor: Colour.transparent, color: Colour.transparent,
     });
 
     // Append ==================================================================
