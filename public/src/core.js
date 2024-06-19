@@ -35,8 +35,19 @@ Object.assign(body.style, bodyStyle);
 
 // Font styles =================================================================
 
-// TODO link to google api fonts
-document.body.style.fontFamily = 'Roboto, Sans';
+// link to google api fonts
+document.head.innerHTML += `
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap"
+    rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+`;
+document.body.style.fontFamily = 'Open Sans, Inter, Monserrat';
 document.body.style.fontSize = '12px';
 
 
@@ -79,5 +90,3 @@ window.onscroll = () => {
   }
   mjNav.lastScrollPos = scrollPos;
 }
-
-
