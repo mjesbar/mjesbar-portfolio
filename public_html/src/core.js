@@ -2,8 +2,20 @@
 import { Colour } from '/src/palette.js';
 
 
+// Generals ====================================================================
 
-// Root element styles ========================================================
+// never cache the page
+document.head.innerHTML += `
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+`;
+// add favicon when share link
+document.head.innerHTML += `
+<link rel="icon" type="image/webp" href="/src/assets/meta-image.webp">
+`;
+
+// Root element styles =========================================================
 
 const html = document.querySelector('html');
 const htmlStyle = {
@@ -37,15 +49,15 @@ Object.assign(body.style, bodyStyle);
 
 // link to google api fonts
 document.head.innerHTML += `
-  <link
-    href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap"
-    rel="stylesheet">
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap"
-    rel="stylesheet">
-  <link
-    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap"
-    rel="stylesheet">
+<link
+  href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap"
+  rel="stylesheet">
+<link
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap"
+  rel="stylesheet">
+<link
+  href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap"
+  rel="stylesheet">
 `;
 document.body.style.fontFamily = 'Open Sans, Inter, Monserrat';
 document.body.style.fontSize = '12px';

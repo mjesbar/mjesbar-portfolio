@@ -118,6 +118,7 @@ class MjSectionService extends MjSection {
     Object.assign(this.serviceMedia.style, {
       width: 'auto', height: '40%',
       margin: 0, padding: 0, border: 0,
+      borderRadius: '10px',
     });
 
     Object.assign(this.switchEl.style, {
