@@ -80,7 +80,7 @@ class MjNav extends HTMLElement {
       width: '33.33%', height: '100%',
       margin: 0, padding: 0, border: 0,
       backgroundColor: Colour.transparent, color: Colour.white,
-      fontSize: '16px', fontWeight: 'bold',
+      fontSize: '1.5em', fontWeight: 'bold',
       transition: 'transform 0.5s',
     });
 
@@ -102,7 +102,7 @@ class MjNav extends HTMLElement {
       width: '33.33%', height: '100%',
       margin: 0, padding: 0, border: 0,
       backgroundColor: Colour.transparent, color: Colour.white,
-      fontSize: '16px', fontWeight: 'bold',
+      fontSize: '1.5em', fontWeight: 'bold',
       transition: 'transform 0.5s',
     });
 
@@ -206,7 +206,7 @@ class MjNav extends HTMLElement {
 
     this.logoContainer.onclick = () => {
       // Redirect to home
-      window.location.href = '/';
+      window.location.href = 'https://mjesbar.dev';
     }
 
     this.querySelectorAll('button').forEach((button) => {

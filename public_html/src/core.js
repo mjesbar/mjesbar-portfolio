@@ -4,48 +4,12 @@ import { Colour } from '/src/palette.js';
 
 // Generals ====================================================================
 
-// never cache the page
-document.head.innerHTML += `
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
-`;
-// add favicon when share link
+// add favicon
 document.head.innerHTML += `
 <link rel="icon" type="image/webp" href="/src/assets/meta-image.webp">
+<link rel="mask-icon" href="/src/assets/meta-image.webp" color="#000000">
+<link rel="apple-touch-icon" href="/src/assets/meta-image.webp">
 `;
-
-// Root element styles =========================================================
-
-const html = document.querySelector('html');
-const htmlStyle = {
-  width: '100%',
-  height: 'auto',
-  margin: 0,
-  padding: 0,
-  border: 0,
-  backgroundColor: Colour.smokyBlack,
-  color: Colour.white,
-};
-Object.assign(html.style, htmlStyle);
-
-const body = document.querySelector('body');
-const bodyStyle = {
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  justifyContent: 'space-start',
-  margin: 0,
-  padding: 0,
-  border: 0,
-  width: '100%',
-  height: 'auto',
-  backgroundColor: 'transparent',
-};
-Object.assign(body.style, bodyStyle);
-
-
-// Font styles =================================================================
 
 // link to google api fonts
 document.head.innerHTML += `
@@ -61,6 +25,34 @@ document.head.innerHTML += `
 `;
 document.body.style.fontFamily = 'Open Sans, Inter, Monserrat';
 document.body.style.fontSize = '12px';
+
+
+// Root ========================================================================
+
+const html = document.querySelector('html');
+Object.assign(html.style, {
+  width: '100%',
+  height: 'auto',
+  margin: 0,
+  padding: 0,
+  border: 0,
+  backgroundColor: Colour.smokyBlack,
+  color: Colour.white,
+});
+
+const body = document.querySelector('body');
+Object.assign(body.style, {
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'space-start',
+  margin: 0,
+  padding: 0,
+  border: 0,
+  width: '100%',
+  height: 'auto',
+  backgroundColor: 'transparent',
+});
 
 
 // Events ======================================================================
